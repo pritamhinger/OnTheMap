@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,54 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29q-lI-QVn">
+                                <rect key="frame" x="20" y="282" width="560" height="37"/>
+                                <color key="backgroundColor" red="0.9744141697883606" green="0.39454889297485352" blue="0.036311160773038864" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                <state key="normal" title="Login Using Udacity">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginViaUdacity:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2b6-DH-G4u"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Ck-T8-6Un">
+                                <rect key="frame" x="20" y="238" width="560" height="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rcQ-sz-ajD">
+                                <rect key="frame" x="20" y="200" width="560" height="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94847410917282104" green="0.60272979736328125" blue="0.1069549098610878" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0Ck-T8-6Un" firstAttribute="top" secondItem="rcQ-sz-ajD" secondAttribute="bottom" constant="8" id="08N-tr-AQM"/>
+                            <constraint firstItem="0Ck-T8-6Un" firstAttribute="trailing" secondItem="rcQ-sz-ajD" secondAttribute="trailing" id="EeO-rL-Q0X"/>
+                            <constraint firstItem="29q-lI-QVn" firstAttribute="top" secondItem="0Ck-T8-6Un" secondAttribute="bottom" constant="14" id="JbM-jb-g44"/>
+                            <constraint firstItem="29q-lI-QVn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MqK-MM-fhj"/>
+                            <constraint firstItem="29q-lI-QVn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="RV5-k9-YJg"/>
+                            <constraint firstItem="0Ck-T8-6Un" firstAttribute="leading" secondItem="rcQ-sz-ajD" secondAttribute="leading" id="U2k-OB-okb"/>
+                            <constraint firstItem="29q-lI-QVn" firstAttribute="trailing" secondItem="0Ck-T8-6Un" secondAttribute="trailing" id="gd1-nk-SoA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="29q-lI-QVn" secondAttribute="trailing" id="i4e-3i-nrb"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="29q-lI-QVn" secondAttribute="leading" id="qs3-kP-NtS"/>
+                            <constraint firstItem="29q-lI-QVn" firstAttribute="leading" secondItem="0Ck-T8-6Un" secondAttribute="leading" id="rPF-lZ-EIK"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="rcQ-sz-ajD" id="8t6-gk-3pp"/>
+                        <outlet property="passwordTextField" destination="0Ck-T8-6Un" id="XjI-4b-Vdj"/>
+                        <outlet property="udacityLoginButton" destination="29q-lI-QVn" id="DjL-Ok-khG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="280" y="305"/>
         </scene>
     </scenes>
 </document>
