@@ -50,7 +50,27 @@ class LoginViewController: UIViewController {
             }, completion: nil);
         }
         else{
-            
+            //TODO: Add checks on Email and password
+            let jsonBody = "{\"udacity\":{\"username\":\"\(emailTextField.text!)\", \"password\":\"\(passwordTextField.text!)\"}}";
+            ParseClient.sharedInstance().taskForLogin(ParseClient.UdacityMethods.Session, jsonBody: jsonBody){ (result, error) in
+                if error == nil{
+                    let parameters = [ParseClient.ParseParameterKeys.Limit:"100"];
+                    ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
+                        if error == nil{
+                            if let result = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
+                                let students = Student.parseStudentJSON(result);
+                                print("Student count is : \(students.count)");
+                            }
+                        }
+                        else{
+                            print(error)
+                        }
+                    }
+                }
+                else{
+                    print(error);
+                }
+            }
         }
     }
     
