@@ -24,9 +24,11 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate {
         
         ParseClient.sharedInstance().getEnrolledStudents(){(result, error) in
             if error == nil{
-                if let result = result{
-                    self.addStudentToMap(result)
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).students = result
+                performUIUpdatesOnMain{
+                    if let result = result{
+                        self.addStudentToMap(result)
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
+                    }
                 }
             }
             else{
@@ -37,18 +39,50 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate {
     
 
     // MARK: - Map View Delegate Methods
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation{
+            return nil
+        }
+        
+        let reusePin = "studentLocation"
+        var pin = mapView.dequeueReusableAnnotationViewWithIdentifier(reusePin) as? MKPinAnnotationView
+        if pin == nil{
+            pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reusePin)
+            pin?.canShowCallout = true
+            pin?.animatesDrop = true
+            pin?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure);
+        }
+        else{
+            pin?.annotation = annotation
+        }
+        
+        return pin
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let currentStudentAnnotation = view.annotation as! MKPointAnnotation;
+        print(currentStudentAnnotation.title!)
+        print(currentStudentAnnotation.subtitle!)
+        if let url = NSURL(string: currentStudentAnnotation.subtitle!){
+            UIApplication.sharedApplication().openURL(url);
+        }
+        else{
+            
+        }
+    }
     
     
-    
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if(segue.identifier == "mapIdentifier"){
+//            if let currentStudentAnnotation  = (sender as! MKAnnotationView).annotation as! MKPointAnnotation!{
+//                print(currentStudentAnnotation.title)
+//                print(currentStudentAnnotation.subtitle)
+//            }
+//        }
+//    }
+ 
     
     // MARK: - Private Methods
     func addStudentToMap(students:[Student]) -> Void {
@@ -56,8 +90,11 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate {
             let studentCoordinates: CLLocationCoordinate2D = CLLocationCoordinate2DMake(student.latitude, student.longitude)
             let annotation = MKPointAnnotation()
             annotation.title = "\(student.firstName) \(student.lastName)"
+            annotation.subtitle = student.mediaURL
+            
             annotation.coordinate = studentCoordinates
             mapView.addAnnotation(annotation);
+            
         }
     }
 

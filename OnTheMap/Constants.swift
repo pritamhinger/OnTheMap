@@ -51,7 +51,15 @@ extension ParseClient {
         static let ObjectId = "objectId";
         static let UniqueKey = "uniqueKey";
         static let UpdatedAt = "updatedAt";
-        
+    }
+    
+    struct LoginResponseKeys {
+        static let Account = "account"
+        static let Registered = "registered"
+        static let Key = "key"
+        static let Session = "session"
+        static let Id = "id"
+        static let Expiration = "expiration"
     }
     
     struct HeaderKeys {

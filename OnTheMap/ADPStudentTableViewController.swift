@@ -22,9 +22,11 @@ class ADPStudentTableViewController: UITableViewController {
         else{
             ParseClient.sharedInstance().getEnrolledStudents(){ (results, error) in
                 if error == nil{
-                    self.students = results
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).students = results;
-                    self.tableView.reloadData()
+                    performUIUpdatesOnMain{
+                        self.students = results
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).students = results
+                        self.tableView.reloadData();
+                    }
                 }
             }
         }

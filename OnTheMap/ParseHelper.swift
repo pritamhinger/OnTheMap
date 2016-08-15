@@ -27,4 +27,17 @@ extension ParseClient{
             }
         }
     }
+    
+    func getAuthenticationData(credential:Credential, completionHandlerForLogin: (result:AuthData?, error:NSError?) -> Void) {
+        let jsonBody = "{\"udacity\":{\"username\":\"\(credential.username)\", \"password\":\"\(credential.password)\"}}";
+        ParseClient.sharedInstance().taskForLogin(ParseClient.UdacityMethods.Session, jsonBody: jsonBody){ (result, error) in
+            if error == nil{
+                let authData = AuthData(jsonResponse: result as! [String : [String : AnyObject]])
+                completionHandlerForLogin(result: authData, error: nil)
+            }
+            else{
+                completionHandlerForLogin(result: nil, error: error)
+            }
+        }
+    }
 }

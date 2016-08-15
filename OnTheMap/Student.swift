@@ -22,8 +22,6 @@ struct Student {
     let createdAt:NSDate;
     let updatedAt:NSDate;
     
-    private static let dateFormatter = NSDateFormatter();
-    
     init?(studentJSON:[String:AnyObject]){
         
         if let uniqueKey = studentJSON[ParseClient.StudentReponseKeys.UniqueKey] as? String{
@@ -59,7 +57,6 @@ struct Student {
     }
     
     static func parseStudentJSON(jsonReponse: [[String:AnyObject]]) -> [Student] {
-        dateFormatter.dateFormat = "yyyy-MM-dd";
         var students = [Student]();
         
         for currentStudentJSON in jsonReponse {

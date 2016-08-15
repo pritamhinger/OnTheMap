@@ -24,6 +24,9 @@
 		48BEC5531D61C5EB0068AA93 /* ADPMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5521D61C5EB0068AA93 /* ADPMapViewController.swift */; };
 		48BEC5551D61CDA10068AA93 /* ADPStudentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5541D61CDA10068AA93 /* ADPStudentTableViewCell.swift */; };
 		48BEC5571D61CFFF0068AA93 /* ADPStudentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5561D61CFFF0068AA93 /* ADPStudentTableViewController.swift */; };
+		48BEC55A1D6204B70068AA93 /* Credential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5591D6204B70068AA93 /* Credential.swift */; };
+		48BEC55C1D6206430068AA93 /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC55B1D6206430068AA93 /* AuthData.swift */; };
+		48BEC55E1D6209FE0068AA93 /* HelperFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC55D1D6209FE0068AA93 /* HelperFunction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,9 @@
 		48BEC5521D61C5EB0068AA93 /* ADPMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPMapViewController.swift; sourceTree = "<group>"; };
 		48BEC5541D61CDA10068AA93 /* ADPStudentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPStudentTableViewCell.swift; sourceTree = "<group>"; };
 		48BEC5561D61CFFF0068AA93 /* ADPStudentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPStudentTableViewController.swift; sourceTree = "<group>"; };
+		48BEC5591D6204B70068AA93 /* Credential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credential.swift; sourceTree = "<group>"; };
+		48BEC55B1D6206430068AA93 /* AuthData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthData.swift; sourceTree = "<group>"; };
+		48BEC55D1D6209FE0068AA93 /* HelperFunction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 		48BEC50D1D5B818D0068AA93 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				48BEC5581D61ECB10068AA93 /* MapComponent */,
 				48BEC5401D60623E0068AA93 /* Common */,
 				48BEC53E1D5B94C80068AA93 /* View */,
 				48BEC53D1D5B94B70068AA93 /* Model */,
@@ -160,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				48BEC54B1D609C020068AA93 /* Student.swift */,
+				48BEC5591D6204B70068AA93 /* Credential.swift */,
+				48BEC55B1D6206430068AA93 /* AuthData.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -192,8 +201,16 @@
 				48BEC5471D607B7A0068AA93 /* UdacityClient.swift */,
 				48BEC5491D6081F50068AA93 /* GCDBlackBox.swift */,
 				48BEC54E1D61B54C0068AA93 /* ParseHelper.swift */,
+				48BEC55D1D6209FE0068AA93 /* HelperFunction.swift */,
 			);
 			name = Common;
+			sourceTree = "<group>";
+		};
+		48BEC5581D61ECB10068AA93 /* MapComponent */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MapComponent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,10 +351,13 @@
 				48BEC5461D60714A0068AA93 /* ParseClient.swift in Sources */,
 				48BEC54A1D6081F50068AA93 /* GCDBlackBox.swift in Sources */,
 				48BEC54C1D609C020068AA93 /* Student.swift in Sources */,
+				48BEC55C1D6206430068AA93 /* AuthData.swift in Sources */,
 				48BEC5441D6067D00068AA93 /* Constants.swift in Sources */,
 				48BEC5571D61CFFF0068AA93 /* ADPStudentTableViewController.swift in Sources */,
+				48BEC55E1D6209FE0068AA93 /* HelperFunction.swift in Sources */,
 				48BEC5551D61CDA10068AA93 /* ADPStudentTableViewCell.swift in Sources */,
 				48BEC5531D61C5EB0068AA93 /* ADPMapViewController.swift in Sources */,
+				48BEC55A1D6204B70068AA93 /* Credential.swift in Sources */,
 				48BEC54F1D61B54C0068AA93 /* ParseHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

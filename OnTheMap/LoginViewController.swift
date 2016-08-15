@@ -52,14 +52,23 @@ class LoginViewController: UIViewController {
         }
         else{
             //TODO: Add checks on Email and password
-            let jsonBody = "{\"udacity\":{\"username\":\"\(emailTextField.text!)\", \"password\":\"\(passwordTextField.text!)\"}}";
-            ParseClient.sharedInstance().taskForLogin(ParseClient.UdacityMethods.Session, jsonBody: jsonBody){ (result, error) in
+            let credential = Credential(username: emailTextField.text!, password: passwordTextField.text!)
+            ParseClient.sharedInstance().getAuthenticationData(credential){ (authData, error) in
                 if error == nil{
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController;
-                    self.presentViewController(controller, animated: true, completion: nil)
+                    performUIUpdatesOnMain{
+                        let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
+                        self.presentViewController(controller, animated: true, completion: nil)
+                    }
                 }
                 else{
-                    print(error);
+                    performUIUpdatesOnMain{
+                        let userInfo = error?.userInfo;
+                        let errorMessage = userInfo![NSLocalizedDescriptionKey] as! String;
+                        let alertViewController = UIAlertController(title: "Login Failed", message: errorMessage, preferredStyle: .Alert)
+                        let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+                        alertViewController.addAction(okAction)
+                        self.presentViewController(alertViewController, animated: true, completion: nil);
+                    }
                 }
             }
         }

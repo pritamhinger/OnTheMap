@@ -82,9 +82,18 @@ class ParseClient: NSObject {
                 return;
             }
             
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!");
-                return;
+            if let statusCode = (response as? NSHTTPURLResponse)?.statusCode{
+                print("status code is \(statusCode)")
+                if(statusCode == 403){
+                    let userInfo = [NSLocalizedDescriptionKey : "Username or password is invalid"];
+                    completionHandlerForLogin(result: nil, error: NSError(domain: "Login Task", code: 1, userInfo: userInfo));
+                    return
+                }
+                if(statusCode  >= 299){
+                   sendError("Your request returned a status code other than 2xx!");
+                    return
+                }
+                
             }
             
             guard let data = data else {
