@@ -75,4 +75,8 @@ extension ParseClient {
     struct  StoryBoardIds {
         static let TabbarView = "MainStoryBoard";
     }
+    
+    struct CellIdentifier {
+        static let StudentCell = "StudentCell";
+    }
 }

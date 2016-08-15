@@ -22,6 +22,8 @@
 		48BEC54F1D61B54C0068AA93 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC54E1D61B54C0068AA93 /* ParseHelper.swift */; };
 		48BEC5511D61BE500068AA93 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BEC5501D61BE500068AA93 /* MapKit.framework */; };
 		48BEC5531D61C5EB0068AA93 /* ADPMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5521D61C5EB0068AA93 /* ADPMapViewController.swift */; };
+		48BEC5551D61CDA10068AA93 /* ADPStudentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5541D61CDA10068AA93 /* ADPStudentTableViewCell.swift */; };
+		48BEC5571D61CFFF0068AA93 /* ADPStudentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5561D61CFFF0068AA93 /* ADPStudentTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		48BEC54E1D61B54C0068AA93 /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
 		48BEC5501D61BE500068AA93 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		48BEC5521D61C5EB0068AA93 /* ADPMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPMapViewController.swift; sourceTree = "<group>"; };
+		48BEC5541D61CDA10068AA93 /* ADPStudentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPStudentTableViewCell.swift; sourceTree = "<group>"; };
+		48BEC5561D61CFFF0068AA93 /* ADPStudentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPStudentTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +151,7 @@
 			children = (
 				48BEC5101D5B818D0068AA93 /* LoginViewController.swift */,
 				48BEC5521D61C5EB0068AA93 /* ADPMapViewController.swift */,
+				48BEC5561D61CFFF0068AA93 /* ADPStudentTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 		48BEC53E1D5B94C80068AA93 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				48BEC5541D61CDA10068AA93 /* ADPStudentTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -329,6 +335,8 @@
 				48BEC54A1D6081F50068AA93 /* GCDBlackBox.swift in Sources */,
 				48BEC54C1D609C020068AA93 /* Student.swift in Sources */,
 				48BEC5441D6067D00068AA93 /* Constants.swift in Sources */,
+				48BEC5571D61CFFF0068AA93 /* ADPStudentTableViewController.swift in Sources */,
+				48BEC5551D61CDA10068AA93 /* ADPStudentTableViewCell.swift in Sources */,
 				48BEC5531D61C5EB0068AA93 /* ADPMapViewController.swift in Sources */,
 				48BEC54F1D61B54C0068AA93 /* ParseHelper.swift in Sources */,
 			);
