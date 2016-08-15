@@ -71,4 +71,8 @@ extension ParseClient {
         static let DELETE = "DELETE";
         static let PUT = "PUT";
     }
+    
+    struct  StoryBoardIds {
+        static let TabbarView = "MainStoryBoard";
+    }
 }

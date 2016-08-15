@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     // MARK: - View Cycles Event
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureBackground();
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -54,24 +55,24 @@ class LoginViewController: UIViewController {
             let jsonBody = "{\"udacity\":{\"username\":\"\(emailTextField.text!)\", \"password\":\"\(passwordTextField.text!)\"}}";
             ParseClient.sharedInstance().taskForLogin(ParseClient.UdacityMethods.Session, jsonBody: jsonBody){ (result, error) in
                 if error == nil{
-                    let parameters = [ParseClient.ParseParameterKeys.Limit:"100"];
-                    ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
-                        if error == nil{
-                            if let result = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
-                                let students = Student.parseStudentJSON(result);
-                                print("Student count is : \(students.count)");
-                            }
-                        }
-                        else{
-                            print(error)
-                        }
-                    }
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController;
+                    self.presentViewController(controller, animated: true, completion: nil)
                 }
                 else{
                     print(error);
                 }
             }
         }
+    }
+    
+    private func configureBackground() {
+        let backgroundGradient = CAGradientLayer()
+        let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).CGColor
+        let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).CGColor
+        backgroundGradient.colors = [colorTop, colorBottom]
+        backgroundGradient.locations = [0.0, 1.0]
+        backgroundGradient.frame = view.frame
+        view.layer.insertSublayer(backgroundGradient, atIndex: 0)
     }
     
 }
