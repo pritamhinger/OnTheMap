@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ADPMapViewController: UIViewController,MKMapViewDelegate {
+class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresentationControllerDelegate {
     
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -74,15 +74,17 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate {
     
     // MARK: - Navigation
 
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if(segue.identifier == "mapIdentifier"){
-//            if let currentStudentAnnotation  = (sender as! MKAnnotationView).annotation as! MKPointAnnotation!{
-//                print(currentStudentAnnotation.title)
-//                print(currentStudentAnnotation.subtitle)
-//            }
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "sortSegueFromMap"){
+            let controller = segue.destinationViewController as! ADPSortViewController
+            controller.modalPresentationStyle = UIModalPresentationStyle.Popover
+            controller.popoverPresentationController?.delegate = self
+        }
+    }
  
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
     
     // MARK: - Private Methods
     func addStudentToMap(students:[Student]) -> Void {

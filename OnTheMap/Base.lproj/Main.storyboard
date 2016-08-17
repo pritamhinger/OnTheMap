@@ -90,7 +90,19 @@
                             <constraint firstItem="bj9-60-rpU" firstAttribute="top" secondItem="yjH-XV-ino" secondAttribute="bottom" id="s71-fu-ePA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="aB9-ES-sld"/>
+                    <navigationItem key="navigationItem" id="aB9-ES-sld">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="YpP-aZ-yoA">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="sorting" id="Vih-jB-8Oi">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="GcD-jb-rB7" kind="popoverPresentation" identifier="sortSegueFromMap" popoverAnchorBarButtonItem="Vih-jB-8Oi" id="p1f-iH-lPr">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="bj9-60-rpU" id="rrL-Yp-GU4"/>
                     </connections>
@@ -98,6 +110,84 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Maj-Fr-efg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2948" y="-443"/>
+        </scene>
+        <!--Sort View Controller-->
+        <scene sceneID="thE-e1-5jl">
+            <objects>
+                <viewController modalPresentationStyle="currentContext" id="GcD-jb-rB7" customClass="ADPSortViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uge-aR-uxL"/>
+                        <viewControllerLayoutGuide type="bottom" id="roP-Xg-seg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yBn-C1-w4l">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="225"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="No. Of Records" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVR-Cr-TG8">
+                                <rect key="frame" x="16" y="20" width="268" height="23"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minimumValue="10" maximumValue="10000" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="qpn-YA-ud2">
+                                <rect key="frame" x="16" y="49" width="94" height="29"/>
+                                <connections>
+                                    <action selector="recordCountValueChanged:" destination="GcD-jb-rB7" eventType="valueChanged" id="M2K-0T-MAv"/>
+                                </connections>
+                            </stepper>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="GEr-DF-C3W">
+                                <rect key="frame" x="16" y="91" width="268" height="29"/>
+                                <segments>
+                                    <segment title="Ascending"/>
+                                    <segment title="Descending"/>
+                                </segments>
+                                <connections>
+                                    <action selector="sortDirectionChanged:" destination="GcD-jb-rB7" eventType="valueChanged" id="gLT-Sz-nkO"/>
+                                </connections>
+                            </segmentedControl>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gkj-t9-AEd">
+                                <rect key="frame" x="16" y="127" width="268" height="80"/>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2dF-WB-DJg">
+                                <rect key="frame" x="118" y="49" width="166" height="24"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2dF-WB-DJg" firstAttribute="top" secondItem="qpn-YA-ud2" secondAttribute="top" id="2Ao-es-S67"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="OVR-Cr-TG8" secondAttribute="trailing" id="5p8-vP-4eB"/>
+                            <constraint firstItem="qpn-YA-ud2" firstAttribute="leading" secondItem="OVR-Cr-TG8" secondAttribute="leading" id="8DB-9h-HFx"/>
+                            <constraint firstItem="roP-Xg-seg" firstAttribute="top" secondItem="gkj-t9-AEd" secondAttribute="bottom" constant="18" id="CPj-nT-4Po"/>
+                            <constraint firstItem="GEr-DF-C3W" firstAttribute="top" secondItem="qpn-YA-ud2" secondAttribute="bottom" constant="13" id="L5s-5K-C0F"/>
+                            <constraint firstItem="GEr-DF-C3W" firstAttribute="trailing" secondItem="OVR-Cr-TG8" secondAttribute="trailing" id="NSk-Bx-6Lo"/>
+                            <constraint firstItem="gkj-t9-AEd" firstAttribute="trailing" secondItem="GEr-DF-C3W" secondAttribute="trailing" id="Z4h-mw-hw2"/>
+                            <constraint firstItem="qpn-YA-ud2" firstAttribute="top" secondItem="OVR-Cr-TG8" secondAttribute="bottom" constant="6" id="bUm-xI-dSn"/>
+                            <constraint firstItem="2dF-WB-DJg" firstAttribute="trailing" secondItem="OVR-Cr-TG8" secondAttribute="trailing" id="hWS-iK-gYq"/>
+                            <constraint firstItem="gkj-t9-AEd" firstAttribute="leading" secondItem="GEr-DF-C3W" secondAttribute="leading" id="jlP-wh-crT"/>
+                            <constraint firstItem="gkj-t9-AEd" firstAttribute="top" secondItem="GEr-DF-C3W" secondAttribute="bottom" constant="8" id="l7W-YU-Ui1"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="OVR-Cr-TG8" secondAttribute="leading" id="neQ-fw-IrU"/>
+                            <constraint firstItem="OVR-Cr-TG8" firstAttribute="top" secondItem="Uge-aR-uxL" secondAttribute="bottom" constant="20" id="rtj-QP-NUt"/>
+                            <constraint firstItem="2dF-WB-DJg" firstAttribute="leading" secondItem="qpn-YA-ud2" secondAttribute="trailing" constant="8" id="rty-3z-nj0"/>
+                            <constraint firstItem="GEr-DF-C3W" firstAttribute="leading" secondItem="OVR-Cr-TG8" secondAttribute="leading" id="uu3-cK-H0x"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="300"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="225"/>
+                    <connections>
+                        <outlet property="recordCountLabel" destination="2dF-WB-DJg" id="kGg-R8-0TH"/>
+                        <outlet property="recordCountStepper" destination="qpn-YA-ud2" id="g7z-Z4-vFx"/>
+                        <outlet property="sortDirectionSegment" destination="GEr-DF-C3W" id="YZf-fh-TUN"/>
+                        <outlet property="sortableColumnPickerView" destination="gkj-t9-AEd" id="ls5-gF-Fdc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6aN-tO-eXD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3665" y="-125"/>
         </scene>
         <!--Student Table View Controller-->
         <scene sceneID="o10-zY-jKS">
@@ -190,7 +280,19 @@
                             <outlet property="delegate" destination="Xze-5k-lwV" id="OK4-2s-Thd"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="GTi-N1-jGM"/>
+                    <navigationItem key="navigationItem" id="GTi-N1-jGM">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="XNH-1e-VVN">
+                            <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="sorting" id="WXN-ly-CuJ">
+                            <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="GcD-jb-rB7" kind="popoverPresentation" identifier="sortSegueFromTable" popoverAnchorBarButtonItem="WXN-ly-CuJ" id="pd3-ji-MFI">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARF-LP-gii" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -256,5 +358,9 @@
     <resources>
         <image name="bulleted_list" width="32" height="32"/>
         <image name="geo_fence" width="32" height="32"/>
+        <image name="sorting" width="34" height="34"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="pd3-ji-MFI"/>
+    </inferredMetricsTieBreakers>
 </document>

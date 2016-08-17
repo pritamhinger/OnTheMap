@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ADPStudentTableViewController: UITableViewController {
+class ADPStudentTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
 
     private var students:[Student]?
     
@@ -100,16 +100,21 @@ class ADPStudentTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if(segue.identifier == "sortSegueFromTable"){
+            let controller = segue.destinationViewController as! ADPSortViewController
+            controller.modalPresentationStyle = UIModalPresentationStyle.Popover
+            controller.popoverPresentationController?.delegate = self
+        }
     }
-    */
+ 
 
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    
     // MARK: - Private Methods
     func getFormattedDate(date:NSDate) -> String {
         let dateFormatter = NSDateFormatter();

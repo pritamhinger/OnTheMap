@@ -87,4 +87,14 @@ extension ParseClient {
     struct CellIdentifier {
         static let StudentCell = "StudentCell";
     }
+    
+    struct  ColumnDisplayName {
+        static let FirstName = "First Name"
+        static let LastName = "Last Name"
+        static let UniqueKey = "Unique Key"
+        static let Latitude = "Latitude"
+        static let Longitude = "Longitude"
+        static let CreatedTime = "Created Time"
+        static let UpdatedTime = "Updated Time"
+    }
 }
