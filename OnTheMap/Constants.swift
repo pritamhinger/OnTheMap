@@ -97,4 +97,8 @@ extension ParseClient {
         static let CreatedTime = "Created Time"
         static let UpdatedTime = "Updated Time"
     }
+    
+    struct NotificationName {
+        static let SortParameterChangeNotification = "SortParameterChange"
+    }
 }

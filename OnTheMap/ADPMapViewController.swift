@@ -22,6 +22,8 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
         mapView.showsUserLocation = false
         mapView.zoomEnabled = true
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ADPMapViewController.initiateGetRequestOnSortParameterChange(_:)), name: ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        
         ParseClient.sharedInstance().getEnrolledStudents(){(result, error) in
             if error == nil{
                 performUIUpdatesOnMain{
@@ -99,5 +101,25 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
             
         }
     }
-
+    
+    func resetAllAnnotation() {
+        mapView.removeAnnotations(mapView.annotations);
+    }
+    
+    // MARK: - NSNotification Handler
+    func initiateGetRequestOnSortParameterChange(notification: NSNotification) {
+        ParseClient.sharedInstance().getEnrolledStudents(){(result, error) in
+            if error == nil{
+                performUIUpdatesOnMain{
+                    if let result = result{
+                        self.resetAllAnnotation()
+                        self.addStudentToMap(result)
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
+                    }
+                }
+            }
+            else{
+            }
+        }
+    }
 }

@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 extension ParseClient{
     
     func getEnrolledStudents(completionHandlerForStudents: (result:[Student]?, error: NSError?) -> Void) {
-        let parameters = [ParseClient.ParseParameterKeys.Limit:"100"];
+        let parameters = prepareParameter()
         ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
             if error == nil{
                 if let results = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
@@ -39,5 +40,14 @@ extension ParseClient{
                 completionHandlerForLogin(result: nil, error: error)
             }
         }
+    }
+    
+    func prepareParameter() -> [String: String]{
+        let sortParameter = (UIApplication.sharedApplication().delegate as! AppDelegate).sortParameter
+        let orderByParameter = "\(sortParameter.sortDirection == SortDirection.Descending ? "-" : "")\(sortParameter.sortByColumn)"
+        print("Order By Parameter Value is : \(orderByParameter)");
+        let parameters = [ParseClient.ParseParameterKeys.Limit:"\(sortParameter.pageSize)",
+                          ParseClient.ParseParameterKeys.Order:"\(orderByParameter)"]
+        return parameters
     }
 }

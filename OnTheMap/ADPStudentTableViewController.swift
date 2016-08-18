@@ -15,6 +15,8 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ADPStudentTableViewController.initiateGetRequestOnSortParameterChange(_:)), name: ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        
         if let result = (UIApplication.sharedApplication().delegate as! AppDelegate).students{
             self.students  = result
             self.tableView.reloadData()
@@ -120,5 +122,18 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
         let dateFormatter = NSDateFormatter();
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss";
         return dateFormatter.stringFromDate(date);
+    }
+    
+    // MARK: - NSNotification Handler
+    func initiateGetRequestOnSortParameterChange(notification:NSNotification){
+        ParseClient.sharedInstance().getEnrolledStudents(){ (results, error) in
+            if error == nil{
+                performUIUpdatesOnMain{
+                    self.students = results
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).students = results
+                    self.tableView.reloadData();
+                }
+            }
+        }
     }
 }

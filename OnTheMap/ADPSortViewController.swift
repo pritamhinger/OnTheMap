@@ -51,15 +51,21 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     // MARK: - IBActions
     @IBAction func recordCountValueChanged(sender: AnyObject) {
-        recordCountLabel.text = "\((sender as! UIStepper).value)"
-        UpdateSortParameter(false)
+        recordCountLabel.text = "\(Int((sender as! UIStepper).value))"
+        UpdateSortParameter()
     }
 
+    
+    @IBAction func initiateGetRequest(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     @IBAction func sortDirectionChanged(sender: UISegmentedControl) {
         let sortDirection = sender.titleForSegmentAtIndex(sender.selectedSegmentIndex)
         
         print("Sorting Direction is : \(sortDirection)")
-        UpdateSortParameter(true)
+        UpdateSortParameter()
     }
 
     // MARK: - UIPickerView Datasource and Delegate
@@ -77,10 +83,10 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        UpdateSortParameter(true)
+        UpdateSortParameter()
     }
     
-    func UpdateSortParameter(initiateNewRequest:Bool) -> Void {
+    func UpdateSortParameter() -> Void {
         sortParameter?.pageSize = Int(recordCountStepper.value)
         switch sortDirectionSegment.selectedSegmentIndex {
         case 0:
@@ -92,10 +98,6 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         sortParameter?.sortByColumn = columnDisplayNameToNameMapping[sortableColumns[sortableColumnPickerView.selectedRowInComponent(0)]]!
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).sortParameter = sortParameter!
-        
-        if(initiateNewRequest){
-            
-        }
     }
     
     func configureUI(sortParameter:SortParameter) -> Void {
