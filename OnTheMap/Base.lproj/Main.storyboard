@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -92,19 +93,31 @@
                     </view>
                     <navigationItem key="navigationItem" id="aB9-ES-sld">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="YpP-aZ-yoA">
-                            <color key="tintColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="sorting" id="Vih-jB-8Oi">
-                            <color key="tintColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="GcD-jb-rB7" kind="popoverPresentation" identifier="sortSegueFromMap" popoverAnchorBarButtonItem="Vih-jB-8Oi" id="p1f-iH-lPr">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
+                                <action selector="showStudentLocationForm:" destination="lKg-Tk-U6G" id="G5I-Zo-vMa"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Logout" id="KoT-r5-gez">
+                                <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </barButtonItem>
+                            <barButtonItem image="sorting" id="Vih-jB-8Oi">
+                                <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <segue destination="GcD-jb-rB7" kind="popoverPresentation" identifier="sortSegueFromMap" popoverAnchorBarButtonItem="Vih-jB-8Oi" id="p1f-iH-lPr">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="XEh-CG-ebn">
+                                <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="bj9-60-rpU" id="rrL-Yp-GU4"/>
+                        <segue destination="cGS-TY-owo" kind="presentation" identifier="newRecordSegueFromMap" id="laT-S2-9AY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Maj-Fr-efg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -205,6 +218,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6aN-tO-eXD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3665" y="-125.5"/>
+        </scene>
+        <!--New Record View Controller-->
+        <scene sceneID="y39-lz-fIx">
+            <objects>
+                <viewController id="cGS-TY-owo" customClass="ADPNewRecordViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BJN-ja-PRQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="lQS-r5-4Dj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vtl-Ti-nCa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P4t-5o-KjF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3815" y="533"/>
         </scene>
         <!--Student Table View Controller-->
         <scene sceneID="o10-zY-jKS">
@@ -378,6 +409,6 @@
         <image name="sorting" width="34" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pd3-ji-MFI"/>
+        <segue reference="p1f-iH-lPr"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -30,6 +30,7 @@
 		48BEC5601D6374F70068AA93 /* SortParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC55F1D6374F70068AA93 /* SortParameter.swift */; };
 		48BEC5621D63757F0068AA93 /* SortDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5611D63757F0068AA93 /* SortDirection.swift */; };
 		48BEC5641D637D3A0068AA93 /* ADPSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5631D637D3A0068AA93 /* ADPSortViewController.swift */; };
+		48CB2A0F1D6639A4002520B6 /* ADPNewRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CB2A0E1D6639A4002520B6 /* ADPNewRecordViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		48BEC55F1D6374F70068AA93 /* SortParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortParameter.swift; sourceTree = "<group>"; };
 		48BEC5611D63757F0068AA93 /* SortDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortDirection.swift; sourceTree = "<group>"; };
 		48BEC5631D637D3A0068AA93 /* ADPSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPSortViewController.swift; sourceTree = "<group>"; };
+		48CB2A0E1D6639A4002520B6 /* ADPNewRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPNewRecordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				48BEC5521D61C5EB0068AA93 /* ADPMapViewController.swift */,
 				48BEC5561D61CFFF0068AA93 /* ADPStudentTableViewController.swift */,
 				48BEC5631D637D3A0068AA93 /* ADPSortViewController.swift */,
+				48CB2A0E1D6639A4002520B6 /* ADPNewRecordViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				48BEC5551D61CDA10068AA93 /* ADPStudentTableViewCell.swift in Sources */,
 				48BEC5531D61C5EB0068AA93 /* ADPMapViewController.swift in Sources */,
 				48BEC55A1D6204B70068AA93 /* Credential.swift in Sources */,
+				48CB2A0F1D6639A4002520B6 /* ADPNewRecordViewController.swift in Sources */,
 				48BEC54F1D61B54C0068AA93 /* ParseHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

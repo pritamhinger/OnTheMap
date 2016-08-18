@@ -12,7 +12,7 @@ import UIKit
 extension ParseClient{
     
     func getEnrolledStudents(completionHandlerForStudents: (result:[Student]?, error: NSError?) -> Void) {
-        let parameters = prepareParameter()
+        let parameters = prepareSortParameter()
         ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
             if error == nil{
                 if let results = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
@@ -42,7 +42,31 @@ extension ParseClient{
         }
     }
     
-    func prepareParameter() -> [String: String]{
+    func getStudentInformation(parameters:[String:String], completionHandler: (student:Student?, error:NSError?) -> Void) {
+        ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
+            if error == nil{
+                print(results)
+                if let result = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
+                    let students = Student.parseStudentJSON(result)
+                    if students.count > 0{
+                        completionHandler(student: students.first, error: nil);
+                    }
+                    else{
+                        completionHandler(student: nil, error: NSError(domain: "Student Information", code: 0, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
+                    }
+                }
+                else{
+                    completionHandler(student: nil, error: NSError(domain: "Student Information", code: 0, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
+                }
+            }
+            else{
+                completionHandler(student: nil, error: error);
+            }
+        }
+
+    }
+    
+    func prepareSortParameter() -> [String: String]{
         let sortParameter = (UIApplication.sharedApplication().delegate as! AppDelegate).sortParameter
         let orderByParameter = "\(sortParameter.sortDirection == SortDirection.Descending ? "-" : "")\(sortParameter.sortByColumn)"
         let parameters = [ParseClient.ParseParameterKeys.Limit:"\(sortParameter.pageSize)",
@@ -54,6 +78,23 @@ extension ParseClient{
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: style)
         let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
         alertViewController.addAction(okAction)
+        controller.presentViewController(alertViewController, animated: true, completion: nil);
+    }
+    
+    func showWarningController(controller:UIViewController, warningMessage:String, title:String, style:UIAlertControllerStyle, completionHandler: (update:Bool) -> Void){
+        let alertViewController = UIAlertController(title: title, message: warningMessage, preferredStyle: style)
+        let okAction = UIAlertAction(title: "Overwrite", style: .Default){ (action) in
+            print("Okay pressed")
+            completionHandler(update: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default){ (action) in
+            print("Cancel Pressed")
+            completionHandler(update: false)
+            
+        }
+        alertViewController.addAction(okAction)
+        alertViewController.addAction((cancelAction))
         controller.presentViewController(alertViewController, animated: true, completion: nil);
     }
 }

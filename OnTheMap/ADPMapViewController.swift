@@ -13,8 +13,8 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
     
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
-
-    //private var students: [Student]?;
+    var currentStudent:Student?
+    
     // MARK: - Controller View Cycle Events
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,33 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
         }
     }
     
+    // MARK: - IBActions
+    @IBAction func showStudentLocationForm(sender: UIBarButtonItem) {
+        let authData = (UIApplication.sharedApplication().delegate as! AppDelegate).authData
+        let uniqueKey = authData?.user_key
+        print("\(uniqueKey)")
+        
+        let parameter = ["where":"{\"uniqueKey\":\"\(2683348594)\"}",
+                         "order":"-updatedAt"]
+        
+        ParseClient.sharedInstance().getStudentInformation(parameter){ (student, error) in
+            if error == nil{
+                self.currentStudent = student
+                performUIUpdatesOnMain{
+                    ParseClient.sharedInstance().showWarningController(self, warningMessage: "You Have Already Posted a Student Location. Would You Like to Overwrite Your Current Location", title: "Student Information", style: .Alert){ (update) in
+                        if update{
+                            print("Launch Controller with Student object")
+                            self.performSegueWithIdentifier("newRecordSegueFromMap", sender: nil)
+                        }
+                    }
+                }
+            }
+            else{
+                self.currentStudent = nil
+                self.performSegueWithIdentifier("newRecordSegueFromMap", sender: self)
+            }
+        }
+    }
 
     // MARK: - Map View Delegate Methods
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -84,6 +111,12 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
             let controller = segue.destinationViewController as! ADPSortViewController
             controller.modalPresentationStyle = UIModalPresentationStyle.Popover
             controller.popoverPresentationController?.delegate = self
+        }
+        else if segue.identifier == "newRecordSegueFromMap"{
+            let controller = segue.destinationViewController as! ADPNewRecordViewController
+            controller.student = currentStudent
+//            controller.modalPresentationStyle = UIModalPresentationStyle.Popover
+//            controller.popoverPresentationController?.delegate = self
         }
     }
  

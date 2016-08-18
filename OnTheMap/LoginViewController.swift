@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginViaUdacity(sender: UIButton) {
         if emailTextField.hidden {
             UIView.animateWithDuration(0.5,
-                                   delay: 0.5,
+                                   delay: 0.0,
                                    usingSpringWithDamping: 0.5,
                                    initialSpringVelocity: 0.1,
                                    options: [],
@@ -56,6 +56,7 @@ class LoginViewController: UIViewController {
             ParseClient.sharedInstance().getAuthenticationData(credential){ (authData, error) in
                 if error == nil{
                     performUIUpdatesOnMain{
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).authData = authData
                         let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
                         self.presentViewController(controller, animated: true, completion: nil)
                     }
