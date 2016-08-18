@@ -45,9 +45,15 @@ extension ParseClient{
     func prepareParameter() -> [String: String]{
         let sortParameter = (UIApplication.sharedApplication().delegate as! AppDelegate).sortParameter
         let orderByParameter = "\(sortParameter.sortDirection == SortDirection.Descending ? "-" : "")\(sortParameter.sortByColumn)"
-        print("Order By Parameter Value is : \(orderByParameter)");
         let parameters = [ParseClient.ParseParameterKeys.Limit:"\(sortParameter.pageSize)",
                           ParseClient.ParseParameterKeys.Order:"\(orderByParameter)"]
         return parameters
+    }
+    
+    func showError(controller:UIViewController, message:String, title:String, style:UIAlertControllerStyle){
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: style)
+        let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+        alertViewController.addAction(okAction)
+        controller.presentViewController(alertViewController, animated: true, completion: nil);
     }
 }

@@ -30,13 +30,11 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
                         self.tableView.reloadData();
                     }
                 }
+                else{
+                    ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
+                }
             }
         }
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     // MARK: - Table view data source
@@ -65,43 +63,21 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
         cell.updatedDate.text = getFormattedDate((student?.updatedAt)!)
         return cell
     }
- 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! ADPStudentTableViewCell
+        if let url = NSURL(string: cell.mediaURL!.text!){
+            if(UIApplication.sharedApplication().canOpenURL(url)){
+                UIApplication.sharedApplication().openURL(url);
+            }
+            else{
+                ParseClient.sharedInstance().showError(self, message: "Invalid Media URL. Operation can't be continued", title: "Open URL in browser", style: .Alert)
+            }
+        }
+        else{
+            ParseClient.sharedInstance().showError(self, message: "Invalid Media URL. Operation can't be continued", title: "Open URL in browser", style: .Alert)
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -133,6 +109,9 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
                     (UIApplication.sharedApplication().delegate as! AppDelegate).students = results
                     self.tableView.reloadData();
                 }
+            }
+            else{
+                ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
             }
         }
     }

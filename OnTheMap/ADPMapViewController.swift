@@ -34,7 +34,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 }
             }
             else{
-                
+                ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
             }
         }
     }
@@ -63,13 +63,16 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let currentStudentAnnotation = view.annotation as! MKPointAnnotation;
-        print(currentStudentAnnotation.title!)
-        print(currentStudentAnnotation.subtitle!)
         if let url = NSURL(string: currentStudentAnnotation.subtitle!){
-            UIApplication.sharedApplication().openURL(url);
+            if UIApplication.sharedApplication().canOpenURL(url) {
+                UIApplication.sharedApplication().openURL(url)
+            }
+            else{
+                ParseClient.sharedInstance().showError(self, message: "Invalid Media URL. Operation can't be continued", title: "Open URL in browser", style: .Alert)
+            }
         }
         else{
-            
+            ParseClient.sharedInstance().showError(self, message: "Invalid Media URL. Operation can't be continued", title: "Open URL in browser", style: .Alert)
         }
     }
     
@@ -119,6 +122,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 }
             }
             else{
+                ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
             }
         }
     }
