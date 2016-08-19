@@ -101,4 +101,11 @@ extension ParseClient {
     struct NotificationName {
         static let SortParameterChangeNotification = "SortParameterChange"
     }
+    
+    struct  Label {
+        static let LocationInputText = "Where Are You Studying Today ?"
+        static let MediaURLInputText = "Post a Link to Share With This Location"
+        static let LocationInputPlaceholder = "Enter Your Address Here"
+        static let MediaURLInputPlaceholder = "Enter a Link to Share"
+    }
 }

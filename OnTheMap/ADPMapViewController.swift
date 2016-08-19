@@ -45,7 +45,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
         let uniqueKey = authData?.user_key
         print("\(uniqueKey)")
         
-        let parameter = ["where":"{\"uniqueKey\":\"\(2683348594)\"}",
+        let parameter = ["where":"{\"uniqueKey\":\"\(uniqueKey!)\"}",
                          "order":"-updatedAt"]
         
         ParseClient.sharedInstance().getStudentInformation(parameter){ (student, error) in
@@ -61,12 +61,18 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 }
             }
             else{
-                self.currentStudent = nil
-                self.performSegueWithIdentifier("newRecordSegueFromMap", sender: self)
+                performUIUpdatesOnMain{
+                    self.currentStudent = nil
+                    self.performSegueWithIdentifier("newRecordSegueFromMap", sender: self)
+                }
             }
         }
     }
 
+    @IBAction func refreshMap(sender: UIBarButtonItem) {
+        NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+    }
+    
     // MARK: - Map View Delegate Methods
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation{

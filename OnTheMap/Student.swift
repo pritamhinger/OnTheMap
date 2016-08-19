@@ -12,15 +12,28 @@ struct Student {
     // Mark: - Student Properties
     
     let objectId:String;
-    let uniqueKey:String;
-    let firstName:String;
-    let lastName:String;
-    let mapLocation:String;
-    let mediaURL:String;
-    let latitude:Double;
-    let longitude:Double;
-    let createdAt:NSDate;
-    let updatedAt:NSDate;
+    var uniqueKey:String;
+    var firstName:String;
+    var lastName:String;
+    var mapLocation:String;
+    var mediaURL:String;
+    var latitude:Double;
+    var longitude:Double;
+    var createdAt:NSDate;
+    var updatedAt:NSDate;
+    
+    init(){
+        objectId = ""
+        uniqueKey = ""
+        firstName = ""
+        lastName = ""
+        mapLocation = ""
+        mediaURL = ""
+        latitude = 0.0
+        longitude = 0.0
+        createdAt = NSDate()
+        updatedAt = NSDate()
+    }
     
     init?(studentJSON:[String:AnyObject]){
         

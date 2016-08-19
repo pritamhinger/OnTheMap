@@ -112,6 +112,9 @@
                             </barButtonItem>
                             <barButtonItem systemItem="refresh" id="XEh-CG-ebn">
                                 <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="refreshMap:" destination="lKg-Tk-U6G" id="fq7-QY-uIr"/>
+                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -231,28 +234,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0y6-pY-E1z">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Address Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0y6-pY-E1z">
                                 <rect key="frame" x="20" y="102" width="560" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tg1-V6-uxY">
-                                <rect key="frame" x="20" y="145" width="560" height="30"/>
-                                <state key="normal" title="Get Lat Long"/>
+                                <rect key="frame" x="20" y="145" width="560" height="33"/>
+                                <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                <state key="normal" title="Find On The Map">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="getLatLongForLocation:" destination="cGS-TY-owo" eventType="touchUpInside" id="Axz-4h-f7G"/>
                                 </connections>
                             </button>
                             <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B3f-E4-iZb">
-                                <rect key="frame" x="20" y="183" width="560" height="397"/>
+                                <rect key="frame" x="20" y="186" width="560" height="394"/>
                             </mapView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PiZ-ie-Lc0">
                                 <rect key="frame" x="227" y="520" width="146" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="146" id="JGs-co-W3w"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
-                                <state key="normal" title="Submit Location"/>
+                                <state key="normal" title="Click To Enter URL">
+                                    <color key="titleColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitRecord:" destination="cGS-TY-owo" eventType="touchUpInside" id="i0J-iD-H64"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where Are You Studying Today ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BRk-6k-46y">
                                 <rect key="frame" x="20" y="70" width="560" height="24"/>
@@ -296,6 +309,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="findOnMapLabel" destination="tg1-V6-uxY" id="Xz8-Ag-dHz"/>
+                        <outlet property="inputDescriptionLabel" destination="BRk-6k-46y" id="elm-5F-GJm"/>
                         <outlet property="locationTextBox" destination="0y6-pY-E1z" id="Ukw-gi-3jm"/>
                         <outlet property="studentLocationMapView" destination="B3f-E4-iZb" id="BgQ-oZ-Bsf"/>
                         <outlet property="submitRecordButton" destination="PiZ-ie-Lc0" id="aVv-vn-wdw"/>

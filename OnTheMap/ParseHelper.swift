@@ -67,6 +67,19 @@ extension ParseClient{
 
     }
     
+    func updateOrInsertStudentInformation(student:Student, apiMethod:String, httpMethod:String, parameters:[String:String], completionHandler: (result:AnyObject?, error: NSError?) -> Void){
+        let jsonBody = convertStudentDataToJSON(student)
+        print(jsonBody)
+        ParseClient.sharedInstance().taskForPostOrPutMethod(apiMethod, httpMethod: httpMethod, parameters: parameters, jsonBody: jsonBody){ (results, error) in
+            if error == nil{
+                completionHandler(result: results, error: nil)
+            }
+            else{
+                completionHandler(result: nil, error: error)
+            }
+        }
+    }
+    
     func getLatLongForAddress(location:String, completionHandler: (placemarks: [CLPlacemark]?, error: NSError?) -> Void) {
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(location){ (placeMarks, error) in
@@ -114,5 +127,10 @@ extension ParseClient{
         alertViewController.addAction(okAction)
         alertViewController.addAction((cancelAction))
         controller.presentViewController(alertViewController, animated: true, completion: nil);
+    }
+    
+    func convertStudentDataToJSON(student:Student) -> String {
+        let jsonString = "{\"\(StudentReponseKeys.UniqueKey)\":\"\(student.uniqueKey)\",\"\(StudentReponseKeys.FirstName)\":\"\(student.firstName)\", \"\(StudentReponseKeys.LastName)\":\"\(student.lastName)\", \"\(StudentReponseKeys.Latitude)\":\(student.latitude), \"\(StudentReponseKeys.Longitude)\":\(student.longitude), \"\(StudentReponseKeys.MapString)\":\"\(student.mapLocation)\",\"\(StudentReponseKeys.MediaURL)\":\"\(student.mediaURL)\"}"
+        return jsonString
     }
 }

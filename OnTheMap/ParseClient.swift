@@ -62,7 +62,51 @@ class ParseClient: NSObject {
         
     }
     
-    
+    func taskForPostOrPutMethod(method: String, httpMethod:String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        /* 1. Set the parameters */
+        var parametersWithApiKey = parameters
+        
+        let request = NSMutableURLRequest(URL: parseURLFromParameters(parametersWithApiKey, withPathExtension: method))
+        request.HTTPMethod = httpMethod
+        request.addValue(ParseClient.ParseAPI.ApplicationID, forHTTPHeaderField: ParseClient.HeaderKeys.ApplicationIdHeader);
+        request.addValue(ParseClient.ParseAPI.RestAPIKey, forHTTPHeaderField: ParseClient.HeaderKeys.RestKeyHeader);
+        request.addValue(ParseClient.HeaderValues.ApplicationJson, forHTTPHeaderField: ParseClient.HeaderKeys.Accept)
+        request.addValue(ParseClient.HeaderValues.ApplicationJson, forHTTPHeaderField: ParseClient.HeaderKeys.ContentType)
+        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            func sendError(error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPOST(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            //print("\(NSString(data: data!, encoding: NSUTF8StringEncoding))");
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+        }
+        
+        /* 7. Start the request */
+        task.resume()
+        
+        return task
+    }
     
     func taskForLogin(method:String, jsonBody:String, completionHandlerForLogin: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         //let request = NSMutableURLRequest(URL: NSURL(string:"https://www.udacity.com/api/session")!);
