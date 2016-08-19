@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 extension ParseClient{
     
@@ -64,6 +65,23 @@ extension ParseClient{
             }
         }
 
+    }
+    
+    func getLatLongForAddress(location:String, completionHandler: (placemarks: [CLPlacemark]?, error: NSError?) -> Void) {
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(location){ (placeMarks, error) in
+            if error == nil{
+                if placeMarks?.count > 0{
+                    completionHandler(placemarks: placeMarks, error: nil)
+                }
+                else{
+                    completionHandler(placemarks: [], error: nil)
+                }
+            }
+            else{
+                completionHandler(placemarks: nil, error: error)
+            }
+        }
     }
     
     func prepareSortParameter() -> [String: String]{

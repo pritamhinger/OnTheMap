@@ -230,8 +230,76 @@
                     <view key="view" contentMode="scaleToFill" id="vtl-Ti-nCa">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0y6-pY-E1z">
+                                <rect key="frame" x="20" y="102" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tg1-V6-uxY">
+                                <rect key="frame" x="20" y="145" width="560" height="30"/>
+                                <state key="normal" title="Get Lat Long"/>
+                                <connections>
+                                    <action selector="getLatLongForLocation:" destination="cGS-TY-owo" eventType="touchUpInside" id="Axz-4h-f7G"/>
+                                </connections>
+                            </button>
+                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B3f-E4-iZb">
+                                <rect key="frame" x="20" y="183" width="560" height="397"/>
+                            </mapView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PiZ-ie-Lc0">
+                                <rect key="frame" x="227" y="520" width="146" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="146" id="JGs-co-W3w"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Submit Location"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where Are You Studying Today ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BRk-6k-46y">
+                                <rect key="frame" x="20" y="70" width="560" height="24"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIH-zY-hQF">
+                                <rect key="frame" x="534" y="32" width="46" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="y8e-EV-JGa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Close">
+                                    <color key="titleColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeForm:" destination="cGS-TY-owo" eventType="touchUpInside" id="3qm-zw-eus"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tg1-V6-uxY" firstAttribute="top" secondItem="0y6-pY-E1z" secondAttribute="bottom" constant="13" id="04g-5Y-cyQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YIH-zY-hQF" secondAttribute="trailing" id="6Za-CH-iLg"/>
+                            <constraint firstItem="lQS-r5-4Dj" firstAttribute="top" secondItem="B3f-E4-iZb" secondAttribute="bottom" constant="20" id="GJk-NO-830"/>
+                            <constraint firstItem="0y6-pY-E1z" firstAttribute="top" secondItem="BRk-6k-46y" secondAttribute="bottom" constant="8" id="LKM-Q7-DTs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0y6-pY-E1z" secondAttribute="trailing" id="OBM-ld-7nL"/>
+                            <constraint firstItem="tg1-V6-uxY" firstAttribute="leading" secondItem="0y6-pY-E1z" secondAttribute="leading" id="Qgg-0J-8NF"/>
+                            <constraint firstItem="B3f-E4-iZb" firstAttribute="top" secondItem="tg1-V6-uxY" secondAttribute="bottom" constant="8" id="RRL-7q-dcL"/>
+                            <constraint firstItem="BRk-6k-46y" firstAttribute="top" secondItem="YIH-zY-hQF" secondAttribute="bottom" constant="2" id="SQc-wM-kur"/>
+                            <constraint firstItem="tg1-V6-uxY" firstAttribute="trailing" secondItem="0y6-pY-E1z" secondAttribute="trailing" id="ZQn-NV-mGs"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="0y6-pY-E1z" secondAttribute="leading" id="Zlk-QL-dqD"/>
+                            <constraint firstItem="YIH-zY-hQF" firstAttribute="top" secondItem="BJN-ja-PRQ" secondAttribute="bottom" constant="12" id="nXm-qo-cV4"/>
+                            <constraint firstItem="BRk-6k-46y" firstAttribute="leading" secondItem="0y6-pY-E1z" secondAttribute="leading" id="o3i-4D-DXT"/>
+                            <constraint firstItem="BRk-6k-46y" firstAttribute="trailing" secondItem="0y6-pY-E1z" secondAttribute="trailing" id="pFo-Dd-mP8"/>
+                            <constraint firstItem="B3f-E4-iZb" firstAttribute="trailing" secondItem="tg1-V6-uxY" secondAttribute="trailing" id="qF8-NA-4Qe"/>
+                            <constraint firstItem="B3f-E4-iZb" firstAttribute="leading" secondItem="tg1-V6-uxY" secondAttribute="leading" id="tyR-jS-tmQ"/>
+                            <constraint firstItem="PiZ-ie-Lc0" firstAttribute="centerX" secondItem="vtl-Ti-nCa" secondAttribute="centerX" id="vxI-cy-fG2"/>
+                            <constraint firstItem="PiZ-ie-Lc0" firstAttribute="bottom" secondItem="B3f-E4-iZb" secondAttribute="bottom" constant="-24" id="y3o-hE-Tod"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="locationTextBox" destination="0y6-pY-E1z" id="Ukw-gi-3jm"/>
+                        <outlet property="studentLocationMapView" destination="B3f-E4-iZb" id="BgQ-oZ-Bsf"/>
+                        <outlet property="submitRecordButton" destination="PiZ-ie-Lc0" id="aVv-vn-wdw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P4t-5o-KjF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
