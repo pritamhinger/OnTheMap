@@ -31,7 +31,15 @@ extension ParseClient{
     }
     
     func getAuthenticationData(credential:Credential, completionHandlerForLogin: (result:AuthData?, error:NSError?) -> Void) {
-        let jsonBody = "{\"udacity\":{\"username\":\"\(credential.username)\", \"password\":\"\(credential.password)\"}}";
+        
+        var jsonBody = ""
+        if credential.authProvider == AuthenticationProvider.Udacity{
+            jsonBody = "{\"udacity\":{\"username\":\"\(credential.username)\", \"password\":\"\(credential.password)\"}}"
+        }
+        else if credential.authProvider == AuthenticationProvider.Facebook{
+            jsonBody = "{\"facebook_mobile\": {\"access_token\": \"\(credential.token);\"}}"
+        }
+        
         ParseClient.sharedInstance().taskForLogin(ParseClient.UdacityMethods.Session, jsonBody: jsonBody){ (result, error) in
             if error == nil{
                 let authData = AuthData(jsonResponse: result as! [String : [String : AnyObject]])

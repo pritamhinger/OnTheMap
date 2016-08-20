@@ -11,9 +11,13 @@ import Foundation
 struct Credential {
     let username:String
     let password:String
+    let token:String
+    let authProvider : ParseClient.AuthenticationProvider
     
-    init(username:String, password:String){
+    init(username:String, password:String, token:String, authProvider:ParseClient.AuthenticationProvider){
         self.username = username;
         self.password = password;
+        self.token = token
+        self.authProvider = authProvider
     }
 }

@@ -7,18 +7,22 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
     
     // MARK: - IBOutlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var udacityLoginButton: UIButton!
+    @IBOutlet weak var btnFacebook: FBSDKLoginButton!
 
     // MARK: - View Cycles Event
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureBackground();
+        btnFacebook.delegate = self
+        configureBackground()
+        configureFacebook()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -52,35 +56,41 @@ class LoginViewController: UIViewController {
         }
         else{
             //TODO: Add checks on Email and password
-            let credential = Credential(username: emailTextField.text!, password: passwordTextField.text!)
-            ParseClient.sharedInstance().getAuthenticationData(credential){ (authData, error) in
-                if error == nil{
-                    
-                    ParseClient.sharedInstance().getStudentPublicUdacityProfile((authData?.user_key)!){ (profile, error) in
-                        performUIUpdatesOnMain{
-                            (UIApplication.sharedApplication().delegate as! AppDelegate).authData = authData
-                            let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
-                            self.presentViewController(controller, animated: true, completion: nil)
-                        }
-                        
-                        if error == nil{
-                            (UIApplication.sharedApplication().delegate as! AppDelegate).userProfile = profile
-                        }
-                    }
-                    
-                }
-                else{
-                    performUIUpdatesOnMain{
-                        let userInfo = error?.userInfo;
-                        let errorMessage = userInfo![NSLocalizedDescriptionKey] as! String;
-                        let alertViewController = UIAlertController(title: "Login Failed", message: errorMessage, preferredStyle: .Alert)
-                        let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
-                        alertViewController.addAction(okAction)
-                        self.presentViewController(alertViewController, animated: true, completion: nil);
-                    }
-                }
-            }
+            let credential = Credential(username: emailTextField.text!, password: passwordTextField.text!, token: "", authProvider: ParseClient.AuthenticationProvider.Udacity)
+            login(credential)
         }
+    }
+    
+    // MARK: - FBSDKLoginButtonDelegate Methods
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        if(error != nil){
+            
+        }
+        else{
+            if let token = FBSDKAccessToken.currentAccessToken(){
+                
+                print("Token Is \(token.tokenString)")
+                let credential =  Credential(username: "", password: "", token: token.tokenString, authProvider: ParseClient.AuthenticationProvider.Facebook)
+                
+                login(credential)
+            }
+            else{
+                print("No token recieved")
+            }
+            
+            
+        }
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        print("Log out called");
+    }
+
+    // MARK: - Private Methods
+    func configureFacebook()
+    {
+        btnFacebook.readPermissions = ["public_profile", "email", "user_friends"];
+        btnFacebook.delegate = self;
     }
     
     private func configureBackground() {
@@ -93,5 +103,53 @@ class LoginViewController: UIViewController {
         view.layer.insertSublayer(backgroundGradient, atIndex: 0)
     }
     
+    func login(credential:Credential) {
+        ParseClient.sharedInstance().getAuthenticationData(credential){ (authData, error) in
+            if error == nil{
+                
+                ParseClient.sharedInstance().getStudentPublicUdacityProfile((authData?.user_key)!){ (profile, error) in
+                    performUIUpdatesOnMain{
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).authData = authData
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).authProvider = credential.authProvider
+                        let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
+                        self.presentViewController(controller, animated: true, completion: nil)
+                    }
+                    
+                    if error == nil{
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).userProfile = profile
+                    }
+                }
+                
+            }
+            else{
+                performUIUpdatesOnMain{
+                    let userInfo = error?.userInfo;
+                    let errorMessage = userInfo![NSLocalizedDescriptionKey] as! String;
+                    let alertViewController = UIAlertController(title: "Login Failed", message: errorMessage, preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+                    alertViewController.addAction(okAction)
+                    self.presentViewController(alertViewController, animated: true, completion: nil);
+                }
+            }
+        }
+    }
+//    func returnUserData(token:String)
+//    {
+//
+//        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,interested_in,gender,birthday,email,age_range,name,picture.width(480).height(480)"])
+//        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+//            
+//            if ((error) != nil)
+//            {
+//                print("Error: \(error)")
+//            }
+//            else
+//            {
+//                print("fetched user: \(result)")
+//                let id : NSString = result.valueForKey("id") as! String
+//                print("User ID is: \(id)")
+//            }
+//        })
+//    }
 }
 

@@ -119,4 +119,8 @@ extension ParseClient {
         static let FirstName = "FirstName"
         static let LastName = "LastName"
     }
+    
+    enum AuthenticationProvider {
+        case Udacity, Facebook
+    }
 }

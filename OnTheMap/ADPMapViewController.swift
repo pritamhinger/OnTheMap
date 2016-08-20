@@ -90,6 +90,10 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
     
     
     @IBAction func logout(sender: AnyObject) {
+        if (UIApplication.sharedApplication().delegate as! AppDelegate).authProvider == ParseClient.AuthenticationProvider.Facebook{
+            FBSDKLoginManager().logOut()
+        }
+        
         ParseClient.sharedInstance().logoutFromUdacity{ (results, error) in
             if error == nil{
                 performUIUpdatesOnMain{

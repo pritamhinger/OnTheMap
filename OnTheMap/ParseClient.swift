@@ -109,6 +109,7 @@ class ParseClient: NSObject {
     }
     
     func taskForLogin(method:String, jsonBody:String, completionHandlerForLogin: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        print("Login JSON is \(jsonBody)")
         //let request = NSMutableURLRequest(URL: NSURL(string:"https://www.udacity.com/api/session")!);
         let request = NSMutableURLRequest(URL: udacityURLFromParameters(method));
         request.HTTPMethod = ParseClient.HTTPMethods.POST;
@@ -127,7 +128,7 @@ class ParseClient: NSObject {
                 sendError("There was an error with your request: \(error)");
                 return;
             }
-            
+            print("\(NSString(data: data!, encoding: NSUTF8StringEncoding))");
             if let statusCode = (response as? NSHTTPURLResponse)?.statusCode{
                 print("status code is \(statusCode)")
                 if(statusCode == 403){
