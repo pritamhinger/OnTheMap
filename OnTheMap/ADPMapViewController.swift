@@ -41,36 +41,66 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
     
     // MARK: - IBActions
     @IBAction func showStudentLocationForm(sender: UIBarButtonItem) {
-        let authData = (UIApplication.sharedApplication().delegate as! AppDelegate).authData
-        let uniqueKey = authData?.user_key
-        print("\(uniqueKey)")
-        
-        let parameter = ["where":"{\"uniqueKey\":\"\(uniqueKey!)\"}",
-                         "order":"-updatedAt"]
-        
-        ParseClient.sharedInstance().getStudentInformation(parameter){ (student, error) in
-            if error == nil{
-                self.currentStudent = student
-                performUIUpdatesOnMain{
-                    ParseClient.sharedInstance().showWarningController(self, warningMessage: "You Have Already Posted a Student Location. Would You Like to Overwrite Your Current Location", title: "Student Information", style: .Alert){ (update) in
-                        if update{
-                            print("Launch Controller with Student object")
-                            self.performSegueWithIdentifier("newRecordSegueFromMap", sender: nil)
-                        }
-                    }
+//        let authData = (UIApplication.sharedApplication().delegate as! AppDelegate).authData
+//        let uniqueKey = authData?.user_key
+//        print("\(uniqueKey)")
+//        
+//        let parameter = ["where":"{\"uniqueKey\":\"\(uniqueKey!)\"}",
+//                         "order":"-updatedAt"]
+//        
+//        ParseClient.sharedInstance().getStudentInformation(parameter){ (student, error) in
+//            if error == nil{
+//                self.currentStudent = student
+//                performUIUpdatesOnMain{
+//                    ParseClient.sharedInstance().showWarningController(self, warningMessage: "You Have Already Posted a Student Location. Would You Like to Overwrite Your Current Location", title: "Student Information", style: .Alert){ (update) in
+//                        if update{
+//                            print("Launch Controller with Student object")
+//                            self.performSegueWithIdentifier("newRecordSegueFromMap", sender: nil)
+//                        }
+//                    }
+//                }
+//            }
+//            else{
+//                performUIUpdatesOnMain{
+//                    self.currentStudent = nil
+//                    self.performSegueWithIdentifier("newRecordSegueFromMap", sender: self)
+//                }
+//            }
+//        }
+        ParseClient.sharedInstance().checkUserRecord(self){ (student, update, error) in
+            if error == nil {
+                if update{
+                    self.currentStudent = student
+                }
+                else{
+                    return
                 }
             }
             else{
-                performUIUpdatesOnMain{
-                    self.currentStudent = nil
-                    self.performSegueWithIdentifier("newRecordSegueFromMap", sender: self)
-                }
+                self.currentStudent = nil
             }
+            
+            self.performSegueWithIdentifier("newRecordSegueFromMap", sender: nil)
         }
     }
 
     @IBAction func refreshMap(sender: UIBarButtonItem) {
         NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+    }
+    
+    
+    @IBAction func logout(sender: AnyObject) {
+        ParseClient.sharedInstance().logoutFromUdacity{ (results, error) in
+            if error == nil{
+                performUIUpdatesOnMain{
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+            else{
+                
+            }
+            
+        }
     }
     
     // MARK: - Map View Delegate Methods

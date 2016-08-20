@@ -158,6 +158,61 @@ class ParseClient: NSObject {
         
     }
     
+    func taskForLogout(method:String, logoutCompletionHandler: (result:AnyObject?, error : NSError?) -> Void) -> NSURLSessionDataTask{
+        let request = NSMutableURLRequest(URL: udacityURLFromParameters(method));
+        request.HTTPMethod = ParseClient.HTTPMethods.DELETE;
+        
+        var xsrfCookie: NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            func sendError(error: String) {
+                print(error);
+                let userInfo = [NSLocalizedDescriptionKey : error];
+                logoutCompletionHandler(result: nil, error: NSError(domain: "Logout Task", code: 1, userInfo: userInfo));
+            }
+            
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)");
+                return;
+            }
+            
+            if let statusCode = (response as? NSHTTPURLResponse)?.statusCode{
+                print("status code is \(statusCode)")
+                if(statusCode == 403){
+                    let userInfo = [NSLocalizedDescriptionKey : "Username or password is invalid"];
+                    logoutCompletionHandler(result: nil, error: NSError(domain: "Login Task", code: 1, userInfo: userInfo));
+                    return
+                }
+                if(statusCode  >= 299){
+                    sendError("Your request returned a status code other than 2xx!");
+                    return
+                }
+                
+            }
+            
+            guard let data = data else {
+                sendError("No data was returned by the request!");
+                return;
+            }
+            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5));
+            
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: logoutCompletionHandler);
+        }
+        
+        task.resume();
+        
+        return task;
+    }
+    
     // MARK: - Helper Methods
     private func parseURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
         

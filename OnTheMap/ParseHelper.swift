@@ -43,6 +43,17 @@ extension ParseClient{
         }
     }
     
+    func logoutFromUdacity(logoutCompletionHandler: (results:AnyObject?, error: NSError?) -> Void) {
+        ParseClient.sharedInstance().taskForLogout(ParseClient.UdacityMethods.Session){ (results, error) in
+            if error == nil{
+                logoutCompletionHandler(results: results, error: nil)
+            }
+            else{
+                logoutCompletionHandler(results: nil, error: error)
+            }
+        }
+    }
+    
     func getStudentInformation(parameters:[String:String], completionHandler: (student:Student?, error:NSError?) -> Void) {
         ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
             if error == nil{
@@ -53,11 +64,11 @@ extension ParseClient{
                         completionHandler(student: students.first, error: nil);
                     }
                     else{
-                        completionHandler(student: nil, error: NSError(domain: "Student Information", code: 0, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
+                        completionHandler(student: nil, error: NSError(domain: "Student Information", code: 1, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
                     }
                 }
                 else{
-                    completionHandler(student: nil, error: NSError(domain: "Student Information", code: 0, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
+                    completionHandler(student: nil, error: NSError(domain: "Student Information", code: 2, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
                 }
             }
             else{
@@ -76,6 +87,30 @@ extension ParseClient{
             }
             else{
                 completionHandler(result: nil, error: error)
+            }
+        }
+    }
+    
+    func checkUserRecord(controller:UIViewController, completionHandler: (student:Student?, update:Bool, error: NSError?) -> Void) {
+        let authData = (UIApplication.sharedApplication().delegate as! AppDelegate).authData
+        let uniqueKey = authData?.user_key
+        print("\(uniqueKey)")
+        
+        let parameter = ["where":"{\"uniqueKey\":\"\(uniqueKey!)\"}",
+                         "order":"-updatedAt"]
+        
+        ParseClient.sharedInstance().getStudentInformation(parameter){ (student, error) in
+            if error == nil{
+                performUIUpdatesOnMain{
+                    ParseClient.sharedInstance().showWarningController(controller, warningMessage: "You Have Already Posted a Student Location. Would You Like to Overwrite Your Current Location", title: "Student Information", style: .Alert){ (update) in
+                        completionHandler(student: student, update: update, error: nil)
+                    }
+                }
+            }
+            else{
+                performUIUpdatesOnMain{
+                    completionHandler(student: nil, update: false, error: error)
+                }
             }
         }
     }

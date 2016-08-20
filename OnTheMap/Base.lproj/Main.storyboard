@@ -101,8 +101,11 @@
                         <rightBarButtonItems>
                             <barButtonItem title="Logout" id="KoT-r5-gez">
                                 <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="logout:" destination="lKg-Tk-U6G" id="fBt-U6-xZ5"/>
+                                </connections>
                             </barButtonItem>
-                            <barButtonItem image="sorting" id="Vih-jB-8Oi">
+                            <barButtonItem title="Sort" id="Vih-jB-8Oi">
                                 <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="GcD-jb-rB7" kind="popoverPresentation" identifier="sortSegueFromMap" popoverAnchorBarButtonItem="Vih-jB-8Oi" id="p1f-iH-lPr">
@@ -414,16 +417,36 @@
                     <navigationItem key="navigationItem" id="GTi-N1-jGM">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="XNH-1e-VVN">
                             <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="sorting" id="WXN-ly-CuJ">
-                            <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="GcD-jb-rB7" kind="popoverPresentation" identifier="sortSegueFromTable" popoverAnchorBarButtonItem="WXN-ly-CuJ" id="pd3-ji-MFI">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
+                                <action selector="showNewStudentForm:" destination="Xze-5k-lwV" id="rdp-P6-0bC"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Logout" id="URd-zm-2uj">
+                                <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="logout:" destination="Xze-5k-lwV" id="Ue7-2F-wJH"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Sort" id="WXN-ly-CuJ">
+                                <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <segue destination="GcD-jb-rB7" kind="popoverPresentation" identifier="sortSegueFromTable" popoverAnchorBarButtonItem="WXN-ly-CuJ" id="pd3-ji-MFI">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="ak2-pw-Sy5">
+                                <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="refresh:" destination="Xze-5k-lwV" id="W7d-6f-uMc"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="cGS-TY-owo" kind="presentation" identifier="newRecordSegueFromTable" id="ygH-3c-Tx8"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARF-LP-gii" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -489,9 +512,9 @@
     <resources>
         <image name="bulleted_list" width="32" height="32"/>
         <image name="geo_fence" width="32" height="32"/>
-        <image name="sorting" width="34" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="p1f-iH-lPr"/>
+        <segue reference="ygH-3c-Tx8"/>
+        <segue reference="pd3-ji-MFI"/>
     </inferredMetricsTieBreakers>
 </document>

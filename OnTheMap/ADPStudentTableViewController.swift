@@ -11,6 +11,7 @@ import UIKit
 class ADPStudentTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
 
     private var students:[Student]?
+    var currentStudent:Student?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,21 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
         }
     }
 
+    // MARK: - IBActions
+    @IBAction func refresh(sender: UIBarButtonItem) {
+        NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+    }
+    
+    @IBAction func logout(sender: UIBarButtonItem) {
+        ParseClient.sharedInstance().logoutFromUdacity{(results, error) in
+            if error == nil{
+                performUIUpdatesOnMain{
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -79,12 +95,35 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
         }
     }
     
+    
+    @IBAction func showNewStudentForm(sender: AnyObject) {
+        ParseClient.sharedInstance().checkUserRecord(self){ (student, update, error) in
+            if error == nil {
+                if update{
+                    self.currentStudent = student
+                }
+                else{
+                    return
+                }
+            }
+            else{
+                self.currentStudent = nil
+            }
+            
+            self.performSegueWithIdentifier("newRecordSegueFromTable", sender: nil)
+        }
+    }
+    
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "sortSegueFromTable"){
             let controller = segue.destinationViewController as! ADPSortViewController
             controller.modalPresentationStyle = UIModalPresentationStyle.Popover
             controller.popoverPresentationController?.delegate = self
+        }
+        else if segue.identifier == "newRecordSegueFromTable"{
+            let controller = segue.destinationViewController as! ADPNewRecordViewController
+            controller.student = currentStudent
         }
     }
  
