@@ -90,17 +90,32 @@ class ADPNewRecordViewController: UIViewController {
             httpMethod = ParseClient.HTTPMethods.PUT
             student?.updatedAt = NSDate()
             apiMethod = "\(apiMethod)/\((student?.objectId)!)"
+            if let userProfile = (UIApplication.sharedApplication().delegate as! AppDelegate).userProfile{
+                student?.firstName = userProfile.first_name
+                student?.lastName = userProfile.last_name
+            }
+            else{
+                student?.firstName = ParseClient.Strings.FirstName
+                student?.lastName = ParseClient.Strings.LastName
+            }
         }
         else{
             httpMethod = ParseClient.HTTPMethods.POST
             student = Student()
             student?.uniqueKey = ((UIApplication.sharedApplication().delegate as! AppDelegate).authData?.user_key)!
+            if let userProfile = (UIApplication.sharedApplication().delegate as! AppDelegate).userProfile{
+                student?.firstName = userProfile.first_name
+                student?.lastName = userProfile.last_name
+            }
+            else{
+                student?.firstName = ParseClient.Strings.FirstName
+                student?.lastName = ParseClient.Strings.LastName
+            }
         }
         
         student?.mapLocation = chosenLocation
         student?.mediaURL = locationTextBox.text!
-        student?.firstName = "Pritam"
-        student?.lastName = "Hinger"
+        
         student?.latitude = (clLocationCoordinate2D?.latitude)!
         student?.longitude = (clLocationCoordinate2D?.longitude)!
         

@@ -54,6 +54,19 @@ extension ParseClient{
         }
     }
     
+    func getStudentPublicUdacityProfile(method:String, completionHandler: (results:UdacityProfile?, error:NSError?) -> Void){
+        let resourcePath = "\(ParseClient.UdacityMethods.UserProfile)/\(method)"
+        ParseClient.sharedInstance().taskForGetFromUdacity(resourcePath){ (results, error) in
+            if error == nil{
+                let profile = UdacityProfile(profileJSON: results[ParseClient.UdacityProfileKeys.User] as! [String : AnyObject])
+                completionHandler(results: profile, error: nil)
+            }
+            else{
+                completionHandler(results: nil, error: error)
+            }
+        }
+    }
+    
     func getStudentInformation(parameters:[String:String], completionHandler: (student:Student?, error:NSError?) -> Void) {
         ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
             if error == nil{

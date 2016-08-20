@@ -31,6 +31,7 @@
 		48BEC5621D63757F0068AA93 /* SortDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5611D63757F0068AA93 /* SortDirection.swift */; };
 		48BEC5641D637D3A0068AA93 /* ADPSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5631D637D3A0068AA93 /* ADPSortViewController.swift */; };
 		48CB2A0F1D6639A4002520B6 /* ADPNewRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CB2A0E1D6639A4002520B6 /* ADPNewRecordViewController.swift */; };
+		48CB2A111D6831A6002520B6 /* UdacityProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CB2A101D6831A6002520B6 /* UdacityProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		48BEC5611D63757F0068AA93 /* SortDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortDirection.swift; sourceTree = "<group>"; };
 		48BEC5631D637D3A0068AA93 /* ADPSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPSortViewController.swift; sourceTree = "<group>"; };
 		48CB2A0E1D6639A4002520B6 /* ADPNewRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPNewRecordViewController.swift; sourceTree = "<group>"; };
+		48CB2A101D6831A6002520B6 /* UdacityProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				48BEC5591D6204B70068AA93 /* Credential.swift */,
 				48BEC55B1D6206430068AA93 /* AuthData.swift */,
 				48BEC55F1D6374F70068AA93 /* SortParameter.swift */,
+				48CB2A101D6831A6002520B6 /* UdacityProfile.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48CB2A111D6831A6002520B6 /* UdacityProfile.swift in Sources */,
 				48BEC5481D607B7A0068AA93 /* UdacityClient.swift in Sources */,
 				48BEC5111D5B818D0068AA93 /* LoginViewController.swift in Sources */,
 				48BEC50F1D5B818D0068AA93 /* AppDelegate.swift in Sources */,

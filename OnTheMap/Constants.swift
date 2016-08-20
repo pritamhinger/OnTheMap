@@ -53,6 +53,12 @@ extension ParseClient {
         static let UpdatedAt = "updatedAt";
     }
     
+    struct UdacityProfileKeys {
+        static let FirstName = "first_name";
+        static let LastName = "last_name";
+        static let User = "user"
+    }
+    
     struct LoginResponseKeys {
         static let Account = "account"
         static let Registered = "registered"
@@ -107,5 +113,10 @@ extension ParseClient {
         static let MediaURLInputText = "Post a Link to Share With This Location"
         static let LocationInputPlaceholder = "Enter Your Address Here"
         static let MediaURLInputPlaceholder = "Enter a Link to Share"
+    }
+    
+    struct Strings{
+        static let FirstName = "FirstName"
+        static let LastName = "LastName"
     }
 }

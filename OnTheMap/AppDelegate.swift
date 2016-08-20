@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var students:[Student]?
     var authData:AuthData?
+    var userProfile:UdacityProfile?
     
     var sortParameter = SortParameter();
 

@@ -55,11 +55,19 @@ class LoginViewController: UIViewController {
             let credential = Credential(username: emailTextField.text!, password: passwordTextField.text!)
             ParseClient.sharedInstance().getAuthenticationData(credential){ (authData, error) in
                 if error == nil{
-                    performUIUpdatesOnMain{
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).authData = authData
-                        let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
-                        self.presentViewController(controller, animated: true, completion: nil)
+                    
+                    ParseClient.sharedInstance().getStudentPublicUdacityProfile((authData?.user_key)!){ (profile, error) in
+                        performUIUpdatesOnMain{
+                            (UIApplication.sharedApplication().delegate as! AppDelegate).authData = authData
+                            let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
+                            self.presentViewController(controller, animated: true, completion: nil)
+                        }
+                        
+                        if error == nil{
+                            (UIApplication.sharedApplication().delegate as! AppDelegate).userProfile = profile
+                        }
                     }
+                    
                 }
                 else{
                     performUIUpdatesOnMain{
