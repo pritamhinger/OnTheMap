@@ -25,6 +25,7 @@ extension ParseClient {
     struct  UdacityAPI {
         static let ApiScheme = "https";
         static let ApiHost = "www.udacity.com";
+        static let SignUpURL = "https://www.udacity.com/account/auth#!/signup"
         static let ApiPath = "/api";
     }
     

@@ -16,12 +16,14 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var udacityLoginButton: UIButton!
     @IBOutlet weak var btnFacebook: FBSDKLoginButton!
+    @IBOutlet weak var signInDifferently: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
 
     // MARK: - View Cycles Event
     override func viewDidLoad() {
         super.viewDidLoad()
         btnFacebook.delegate = self
-        configureBackground()
+        //configureBackground()
         configureFacebook()
     }
     
@@ -29,12 +31,22 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
         super.viewWillAppear(animated);
         passwordTextField.hidden = true;
         emailTextField.hidden = true;
+        signUpButton.hidden = true;
+        signInDifferently.hidden = true
         udacityLoginButton.center.y -= 80;
+        btnFacebook.center.y -= 80
     }
     
     // MARK: - IBActions
     @IBAction func loginViaUdacity(sender: UIButton) {
         if emailTextField.hidden {
+            UIView.animateWithDuration(0.2, animations: {
+                self.btnFacebook.hidden = true
+                self.signInDifferently.hidden = false
+                self.signInDifferently.center.y += 45
+                self.btnFacebook.center.y += 40
+            })
+            
             UIView.animateWithDuration(0.5,
                                    delay: 0.0,
                                    usingSpringWithDamping: 0.5,
@@ -42,22 +54,63 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
                                    options: [],
                                    animations: {
                                     self.udacityLoginButton.center.y += 40;
+                                    self.signUpButton.hidden = false
+                                    self.signUpButton.center.y = self.udacityLoginButton.center.y + 45
             }, completion: nil);
         
             UIView.transitionWithView(self.passwordTextField, duration: 0.6, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
-                self.passwordTextField.hidden = false;
-                self.passwordTextField.center.y += 40;
-            }, completion: nil);
+                self.passwordTextField.hidden = false
+                self.passwordTextField.center.y += 40
+            }, completion: nil)
         
             UIView.transitionWithView(self.emailTextField, duration: 0.6, options: [.CurveEaseIn, .TransitionFlipFromTop], animations: {
-                self.emailTextField.hidden = false;
-                self.emailTextField.center.y += 40;
-            }, completion: nil);
+                self.emailTextField.hidden = false
+                self.emailTextField.center.y += 40
+            }, completion: nil)
         }
         else{
-            //TODO: Add checks on Email and password
+            if emailTextField.text?.characters.count == 0 || passwordTextField.text?.characters.count == 0{
+                ParseClient.sharedInstance().showError(self, message: "Username and password are required", title: "", style: .Alert)
+                return
+            }
             let credential = Credential(username: emailTextField.text!, password: passwordTextField.text!, token: "", authProvider: ParseClient.AuthenticationProvider.Udacity)
             login(credential)
+        }
+    }
+    
+    @IBAction func showSignInOptions(sender: UIButton) {
+        
+        UIView.animateWithDuration(0.5,
+                                   delay: 0.3,
+                                   usingSpringWithDamping: 0.5,
+                                   initialSpringVelocity: 0.1,
+                                   options: [],
+                                   animations: {
+                                    self.udacityLoginButton.center.y -= 40
+                                    self.btnFacebook.center.y -= 40
+                                    self.signUpButton.hidden = true
+                                    self.signUpButton.center.y = self.udacityLoginButton.center.y - 45
+                                    self.btnFacebook.hidden = false
+                                    self.signInDifferently.hidden = true
+                                    self.signInDifferently.center.y -= 45
+            }, completion: nil)
+        
+        UIView.transitionWithView(self.passwordTextField, duration: 0.6, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
+            self.passwordTextField.hidden = true;
+            self.passwordTextField.center.y -= 40;
+            }, completion: nil)
+        
+        UIView.transitionWithView(self.emailTextField, duration: 0.6, options: [.CurveEaseIn, .TransitionFlipFromTop], animations: {
+            self.emailTextField.hidden = true;
+            self.emailTextField.center.y -= 40;
+            }, completion: nil)
+        
+    }
+    
+    @IBAction func signUpButtonClicked(sender: UIButton) {
+        let url = NSURL(string: ParseClient.UdacityAPI.SignUpURL)
+        if UIApplication.sharedApplication().canOpenURL(url!) {
+            UIApplication.sharedApplication().openURL(url!)
         }
     }
     
@@ -111,6 +164,11 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
                     performUIUpdatesOnMain{
                         (UIApplication.sharedApplication().delegate as! AppDelegate).authData = authData
                         (UIApplication.sharedApplication().delegate as! AppDelegate).authProvider = credential.authProvider
+                        
+                        if self.btnFacebook.hidden{
+                            self.btnFacebook.hidden = false
+                        }
+                        
                         let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
                         self.presentViewController(controller, animated: true, completion: nil)
                     }
@@ -133,23 +191,5 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
             }
         }
     }
-//    func returnUserData(token:String)
-//    {
-//
-//        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,interested_in,gender,birthday,email,age_range,name,picture.width(480).height(480)"])
-//        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-//            
-//            if ((error) != nil)
-//            {
-//                print("Error: \(error)")
-//            }
-//            else
-//            {
-//                print("fetched user: \(result)")
-//                let id : NSString = result.valueForKey("id") as! String
-//                print("User ID is: \(id)")
-//            }
-//        })
-//    }
 }
 
