@@ -69,7 +69,7 @@ struct Student {
         return;
     }
     
-    static func parseStudentJSON(jsonReponse: [[String:AnyObject]]) -> [Student] {
+    static func parseStudentJSON(jsonReponse: [[String:AnyObject]], updateAppData:Bool){
         var students = [Student]();
         
         for currentStudentJSON in jsonReponse {
@@ -78,7 +78,15 @@ struct Student {
             }
         }
         
-        return students;
+        if updateAppData {
+            AppData.sharedInstance.students = students
+        }
+        else{
+            AppData.sharedInstance.currentStudent = students
+        }
+        
+        
+        return
     }
     
     static func formatDate(dateString:String) -> NSDate {

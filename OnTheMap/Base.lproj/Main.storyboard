@@ -148,17 +148,17 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aB9-ES-sld">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="YpP-aZ-yoA">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="KoT-r5-gez">
                             <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="showStudentLocationForm:" destination="lKg-Tk-U6G" id="G5I-Zo-vMa"/>
+                                <action selector="logout:" destination="lKg-Tk-U6G" id="fBt-U6-xZ5"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Logout" id="KoT-r5-gez">
+                            <barButtonItem systemItem="add" id="YpP-aZ-yoA">
                                 <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="logout:" destination="lKg-Tk-U6G" id="fBt-U6-xZ5"/>
+                                    <action selector="showStudentLocationForm:" destination="lKg-Tk-U6G" id="G5I-Zo-vMa"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Sort" id="Vih-jB-8Oi">
@@ -471,17 +471,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="GTi-N1-jGM">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="XNH-1e-VVN">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="URd-zm-2uj">
                             <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="showNewStudentForm:" destination="Xze-5k-lwV" id="rdp-P6-0bC"/>
+                                <action selector="logout:" destination="Xze-5k-lwV" id="Ue7-2F-wJH"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Logout" id="URd-zm-2uj">
+                            <barButtonItem systemItem="add" id="XNH-1e-VVN">
                                 <color key="tintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="logout:" destination="Xze-5k-lwV" id="Ue7-2F-wJH"/>
+                                    <action selector="showNewStudentForm:" destination="Xze-5k-lwV" id="rdp-P6-0bC"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Sort" id="WXN-ly-CuJ">

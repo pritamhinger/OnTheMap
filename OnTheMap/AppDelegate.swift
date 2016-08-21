@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    var students:[Student]?
+    //var students:[Student]?
     var authData:AuthData?
     var userProfile:UdacityProfile?
     var authProvider:ParseClient.AuthenticationProvider?

@@ -36,9 +36,15 @@ class ADPNewRecordViewController: UIViewController, UITextFieldDelegate {
     // MARK: - IBActions
     @IBAction func getLatLongForLocation(sender: UIButton) {
         let location = locationTextBox.text!;
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        activityIndicator.center = self.view.center
+        activityIndicator.transform = CGAffineTransformMakeScale(4.0, 4.0)
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
         ParseClient.sharedInstance().getLatLongForAddress(location){ (placemarks, error) in
             if error == nil {
                 performUIUpdatesOnMain{
+                    activityIndicator.stopAnimating()
                     if placemarks?.count > 0{
                         UIView.transitionWithView(self.studentLocationMapView, duration: 1.0, options: [.CurveEaseOut, .TransitionCurlDown], animations: {
                             self.studentLocationMapView.hidden = false;
@@ -78,6 +84,7 @@ class ADPNewRecordViewController: UIViewController, UITextFieldDelegate {
             }
             else{
                 performUIUpdatesOnMain{
+                    activityIndicator.stopAnimating()
                     let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
                     ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert);
                 }

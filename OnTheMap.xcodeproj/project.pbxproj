@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		485D017A1D69BCF500210143 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D01791D69BCF500210143 /* AppData.swift */; };
+		485D017C1D69E8B500210143 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D017B1D69E8B500210143 /* UIViewControllerExtension.swift */; };
 		48BEC50F1D5B818D0068AA93 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC50E1D5B818D0068AA93 /* AppDelegate.swift */; };
 		48BEC5111D5B818D0068AA93 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEC5101D5B818D0068AA93 /* LoginViewController.swift */; };
 		48BEC5141D5B818D0068AA93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48BEC5121D5B818D0068AA93 /* Main.storyboard */; };
@@ -56,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		485D01791D69BCF500210143 /* AppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		485D017B1D69E8B500210143 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		48BEC50B1D5B818D0068AA93 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48BEC50E1D5B818D0068AA93 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48BEC5101D5B818D0068AA93 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 				48BEC55B1D6206430068AA93 /* AuthData.swift */,
 				48BEC55F1D6374F70068AA93 /* SortParameter.swift */,
 				48CB2A101D6831A6002520B6 /* UdacityProfile.swift */,
+				485D01791D69BCF500210143 /* AppData.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 				48BEC54E1D61B54C0068AA93 /* ParseHelper.swift */,
 				48BEC55D1D6209FE0068AA93 /* HelperFunction.swift */,
 				48BEC5611D63757F0068AA93 /* SortDirection.swift */,
+				485D017B1D69E8B500210143 /* UIViewControllerExtension.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -407,6 +413,7 @@
 				48BEC5111D5B818D0068AA93 /* LoginViewController.swift in Sources */,
 				48BEC50F1D5B818D0068AA93 /* AppDelegate.swift in Sources */,
 				48BEC5461D60714A0068AA93 /* ParseClient.swift in Sources */,
+				485D017C1D69E8B500210143 /* UIViewControllerExtension.swift in Sources */,
 				48BEC54A1D6081F50068AA93 /* GCDBlackBox.swift in Sources */,
 				48BEC54C1D609C020068AA93 /* Student.swift in Sources */,
 				48BEC55C1D6206430068AA93 /* AuthData.swift in Sources */,
@@ -421,6 +428,7 @@
 				48BEC55A1D6204B70068AA93 /* Credential.swift in Sources */,
 				48CB2A0F1D6639A4002520B6 /* ADPNewRecordViewController.swift in Sources */,
 				48BEC54F1D61B54C0068AA93 /* ParseHelper.swift in Sources */,
+				485D017A1D69BCF500210143 /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

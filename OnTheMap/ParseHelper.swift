@@ -17,8 +17,8 @@ extension ParseClient{
         ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
             if error == nil{
                 if let results = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
-                    let students = Student.parseStudentJSON(results);
-                    completionHandlerForStudents(result: students, error: nil);
+                    Student.parseStudentJSON(results, updateAppData: true);
+                    completionHandlerForStudents(result: AppData.sharedInstance.students, error: nil);
                 }
                 else{
                     completionHandlerForStudents(result: nil, error: NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]));
@@ -80,9 +80,10 @@ extension ParseClient{
             if error == nil{
                 print(results)
                 if let result = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
-                    let students = Student.parseStudentJSON(result)
-                    if students.count > 0{
-                        completionHandler(student: students.first, error: nil);
+                    Student.parseStudentJSON(result, updateAppData: false)
+                    let students = AppData.sharedInstance.currentStudent
+                    if students!.count > 0{
+                        completionHandler(student: students!.first, error: nil);
                     }
                     else{
                         completionHandler(student: nil, error: NSError(domain: "Student Information", code: 1, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));

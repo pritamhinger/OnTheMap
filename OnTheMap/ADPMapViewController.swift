@@ -29,7 +29,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 performUIUpdatesOnMain{
                     if let result = result{
                         self.addStudentToMap(result)
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
+                        //(UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
                     }
                 }
             }
@@ -177,7 +177,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                     if let result = result{
                         self.resetAllAnnotation()
                         self.addStudentToMap(result)
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
+                        //(UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
                     }
                 }
             }

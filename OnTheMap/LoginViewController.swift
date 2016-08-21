@@ -77,7 +77,7 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
                 return
             }
             let credential = Credential(username: emailTextField.text!, password: passwordTextField.text!, token: "", authProvider: ParseClient.AuthenticationProvider.Udacity)
-            login(credential)
+            login(credential, facebookBtnView: self.btnFacebook)
         }
     }
     
@@ -135,7 +135,7 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
                 print("Token Is \(token.tokenString)")
                 let credential =  Credential(username: "", password: "", token: token.tokenString, authProvider: ParseClient.AuthenticationProvider.Facebook)
                 
-                login(credential)
+                login(credential, facebookBtnView: self.btnFacebook)
             }
             else{
                 print("No token recieved")
@@ -169,38 +169,6 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
         backgroundGradient.locations = [0.0, 1.0]
         backgroundGradient.frame = view.frame
         view.layer.insertSublayer(backgroundGradient, atIndex: 0)
-    }
-    
-    func login(credential:Credential) {
-        ParseClient.sharedInstance().getAuthenticationData(credential){ (authData, error) in
-            if error == nil{
-                
-                ParseClient.sharedInstance().getStudentPublicUdacityProfile((authData?.user_key)!){ (profile, error) in
-                    performUIUpdatesOnMain{
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).authData = authData
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).authProvider = credential.authProvider
-                        
-                        if self.btnFacebook.hidden{
-                            self.btnFacebook.hidden = false
-                        }
-                        
-                        let controller = self.storyboard!.instantiateViewControllerWithIdentifier(ParseClient.StoryBoardIds.TabbarView) as! UITabBarController
-                        self.presentViewController(controller, animated: true, completion: nil)
-                    }
-                    
-                    if error == nil{
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).userProfile = profile
-                    }
-                }
-                
-            }
-            else{
-                performUIUpdatesOnMain{
-                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
-                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "Login Failed", style: .Alert)
-                }
-            }
-        }
     }
 }
 
