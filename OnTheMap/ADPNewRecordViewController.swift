@@ -30,7 +30,7 @@ class ADPNewRecordViewController: UIViewController, UITextFieldDelegate {
         }
         
         let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(ADPNewRecordViewController.tap(_:)))
-        view.addGestureRecognizer(tapGestureReconizer);
+        view.addGestureRecognizer(tapGestureReconizer)
     }
 
     // MARK: - IBActions
@@ -48,15 +48,15 @@ class ADPNewRecordViewController: UIViewController, UITextFieldDelegate {
                     if placemarks?.count > 0{
                         UIView.transitionWithView(self.studentLocationMapView, duration: 1.0, options: [.CurveEaseOut, .TransitionCurlDown], animations: {
                             self.studentLocationMapView.hidden = false;
-                            }, completion: nil);
+                            }, completion: nil)
                         
                         UIView.transitionWithView(self.submitRecordButton, duration: 1.5, options: [.CurveEaseOut, UIViewAnimationOptions.TransitionCurlUp], animations: {
                             self.submitRecordButton.hidden = false;
-                            }, completion: nil);
+                            }, completion: nil)
                         
                         self.chosenLocation = self.locationTextBox.text!
                         if self.student == nil{
-                            self.locationTextBox.text = "";
+                            self.locationTextBox.text = ""
                         }
                         else{
                             self.locationTextBox.text = self.student?.mediaURL
@@ -86,7 +86,7 @@ class ADPNewRecordViewController: UIViewController, UITextFieldDelegate {
                 performUIUpdatesOnMain{
                     activityIndicator.stopAnimating()
                     let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
-                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert);
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
                 }
             }
         }
@@ -98,7 +98,7 @@ class ADPNewRecordViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        var httpMethod = "";
+        var httpMethod = ""
         var apiMethod = ParseClient.ParseMethods.StudentLocation
         if student != nil{
             httpMethod = ParseClient.HTTPMethods.PUT

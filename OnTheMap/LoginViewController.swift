@@ -27,16 +27,16 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
         btnFacebook.delegate = self
         configureFacebook()
         let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.tap(_:)))
-        view.addGestureRecognizer(tapGestureReconizer);
+        view.addGestureRecognizer(tapGestureReconizer)
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated);
-        passwordTextField.hidden = true;
-        emailTextField.hidden = true;
-        signUpButton.hidden = true;
+        super.viewWillAppear(animated)
+        passwordTextField.hidden = true
+        emailTextField.hidden = true
+        signUpButton.hidden = true
         signInDifferently.hidden = true
-        udacityLoginButton.center.y -= 80;
+        udacityLoginButton.center.y -= 80
         btnFacebook.center.y -= 80
     }
     
@@ -56,10 +56,10 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
                                    initialSpringVelocity: 0.1,
                                    options: [],
                                    animations: {
-                                    self.udacityLoginButton.center.y += 40;
+                                    self.udacityLoginButton.center.y += 40
                                     self.signUpButton.hidden = false
                                     self.signUpButton.center.y = self.udacityLoginButton.center.y + 45
-            }, completion: nil);
+            }, completion: nil)
         
             UIView.transitionWithView(self.passwordTextField, duration: 0.6, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
                 self.passwordTextField.hidden = false
@@ -99,13 +99,13 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
             }, completion: nil)
         
         UIView.transitionWithView(self.passwordTextField, duration: 0.6, options: [.CurveEaseOut, .TransitionFlipFromBottom], animations: {
-            self.passwordTextField.hidden = true;
-            self.passwordTextField.center.y -= 40;
+            self.passwordTextField.hidden = true
+            self.passwordTextField.center.y -= 40
             }, completion: nil)
         
         UIView.transitionWithView(self.emailTextField, duration: 0.6, options: [.CurveEaseIn, .TransitionFlipFromTop], animations: {
-            self.emailTextField.hidden = true;
-            self.emailTextField.center.y -= 40;
+            self.emailTextField.hidden = true
+            self.emailTextField.center.y -= 40
             }, completion: nil)
         
     }
@@ -146,7 +146,6 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        print("Log out called");
     }
 
     // MARK: - Tap Gesture Event
@@ -157,8 +156,8 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFiel
     // MARK: - Private Methods
     func configureFacebook()
     {
-        btnFacebook.readPermissions = ["public_profile", "email", "user_friends"];
-        btnFacebook.delegate = self;
+        btnFacebook.readPermissions = ["public_profile", "email", "user_friends"]
+        btnFacebook.delegate = self
     }
     
     private func configureBackground() {

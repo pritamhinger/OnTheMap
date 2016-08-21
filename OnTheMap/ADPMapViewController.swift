@@ -18,7 +18,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
     // MARK: - Controller View Cycle Events
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self;
+        mapView.delegate = self
         mapView.showsUserLocation = false
         mapView.zoomEnabled = true
         
@@ -29,7 +29,6 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 performUIUpdatesOnMain{
                     if let result = result{
                         self.addStudentToMap(result)
-                        //(UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
                     }
                 }
             }
@@ -107,7 +106,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
             pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reusePin)
             pin?.canShowCallout = true
             pin?.animatesDrop = true
-            pin?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure);
+            pin?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
         else{
             pin?.annotation = annotation
@@ -160,13 +159,12 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
             annotation.subtitle = student.mediaURL
             
             annotation.coordinate = studentCoordinates
-            mapView.addAnnotation(annotation);
-            
+            mapView.addAnnotation(annotation)
         }
     }
     
     func resetAllAnnotation() {
-        mapView.removeAnnotations(mapView.annotations);
+        mapView.removeAnnotations(mapView.annotations)
     }
     
     // MARK: - NSNotification Handler
@@ -177,7 +175,6 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                     if let result = result{
                         self.resetAllAnnotation()
                         self.addStudentToMap(result)
-                        //(UIApplication.sharedApplication().delegate as! AppDelegate).students = result;
                     }
                 }
             }

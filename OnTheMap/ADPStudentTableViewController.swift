@@ -18,14 +18,6 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ADPStudentTableViewController.initiateGetRequestOnSortParameterChange(_:)), name: ParseClient.NotificationName.SortParameterChangeNotificationForTable, object: nil)
         
-//        if let insatance = AppData.sharedInstance{
-//            print("Instnace is not nil")
-//        }
-//        else{
-//            print("Instance is nul")
-//        }
-
-        
         if AppData.sharedInstance.students?.count > 0{
             //self.students  = result
             self.tableView.reloadData()
@@ -34,8 +26,6 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
             ParseClient.sharedInstance().getEnrolledStudents(){ (results, error) in
                 if error == nil{
                     performUIUpdatesOnMain{
-                        //self.students = results
-                        //(UIApplication.sharedApplication().delegate as! AppDelegate).students = results
                         self.tableView.reloadData();
                     }
                 }
@@ -81,7 +71,7 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
             return students.count
         }
         else{
-            return 0;
+            return 0
         }
     }
 
@@ -89,7 +79,7 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ParseClient.CellIdentifier.StudentCell, forIndexPath: indexPath) as! ADPStudentTableViewCell
 
-        let student = AppData.sharedInstance.students![indexPath.row];
+        let student = AppData.sharedInstance.students![indexPath.row]
         cell.studentName.text = "\((student.firstName)) \((student.lastName))"
         cell.mediaURL.text = student.mediaURL
         cell.createdDate.text = getFormattedDate((student.createdAt))
@@ -101,7 +91,7 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! ADPStudentTableViewCell
         if let url = NSURL(string: cell.mediaURL!.text!){
             if(UIApplication.sharedApplication().canOpenURL(url)){
-                UIApplication.sharedApplication().openURL(url);
+                UIApplication.sharedApplication().openURL(url)
             }
             else{
                 ParseClient.sharedInstance().showError(self, message: "Invalid Media URL. Operation can't be continued", title: "Open URL in browser", style: .Alert)
@@ -163,8 +153,8 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
     
     // MARK: - Private Methods
     func getFormattedDate(date:NSDate) -> String {
-        let dateFormatter = NSDateFormatter();
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss";
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
         return dateFormatter.stringFromDate(date);
     }
     
@@ -177,9 +167,7 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
         ParseClient.sharedInstance().getEnrolledStudents(){ (results, error) in
             if error == nil{
                 performUIUpdatesOnMain{
-                    //self.students = results
-                    //(UIApplication.sharedApplication().delegate as! AppDelegate).students = results
-                    self.tableView.reloadData();
+                    self.tableView.reloadData()
                 }
             }
             else{

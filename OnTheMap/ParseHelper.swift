@@ -17,15 +17,15 @@ extension ParseClient{
         ParseClient.sharedInstance().taskForGetMethod(ParseClient.ParseMethods.StudentLocation, parameters: parameters){ (results, error) in
             if error == nil{
                 if let results = results[ParseClient.StudentReponseKeys.Results] as? [[String:AnyObject]]{
-                    Student.parseStudentJSON(results, updateAppData: true);
+                    Student.parseStudentJSON(results, updateAppData: true)
                     completionHandlerForStudents(result: AppData.sharedInstance.students, error: nil);
                 }
                 else{
-                    completionHandlerForStudents(result: nil, error: NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]));
+                    completionHandlerForStudents(result: nil, error: NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]))
                 }
             }
             else{
-                completionHandlerForStudents(result: nil, error: error);
+                completionHandlerForStudents(result: nil, error: error)
             }
         }
     }
@@ -83,26 +83,24 @@ extension ParseClient{
                     Student.parseStudentJSON(result, updateAppData: false)
                     let students = AppData.sharedInstance.currentStudent
                     if students!.count > 0{
-                        completionHandler(student: students!.first, error: nil);
+                        completionHandler(student: students!.first, error: nil)
                     }
                     else{
-                        completionHandler(student: nil, error: NSError(domain: "Student Information", code: 1, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
+                        completionHandler(student: nil, error: NSError(domain: "Student Information", code: 1, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]))
                     }
                 }
                 else{
-                    completionHandler(student: nil, error: NSError(domain: "Student Information", code: 2, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]));
+                    completionHandler(student: nil, error: NSError(domain: "Student Information", code: 2, userInfo: [NSLocalizedDescriptionKey: "Student Not present"]))
                 }
             }
             else{
-                completionHandler(student: nil, error: error);
+                completionHandler(student: nil, error: error)
             }
         }
-
     }
     
     func updateOrInsertStudentInformation(student:Student, apiMethod:String, httpMethod:String, parameters:[String:String], completionHandler: (result:AnyObject?, error: NSError?) -> Void){
         let jsonBody = convertStudentDataToJSON(student)
-        print(jsonBody)
         ParseClient.sharedInstance().taskForPostOrPutMethod(apiMethod, httpMethod: httpMethod, parameters: parameters, jsonBody: jsonBody){ (results, error) in
             if error == nil{
                 completionHandler(result: results, error: nil)
@@ -116,7 +114,6 @@ extension ParseClient{
     func checkUserRecord(controller:UIViewController, completionHandler: (student:Student?, update:Bool, error: NSError?) -> Void) {
         let authData = (UIApplication.sharedApplication().delegate as! AppDelegate).authData
         let uniqueKey = authData?.user_key
-        print("\(uniqueKey)")
         
         let parameter = ["where":"{\"uniqueKey\":\"\(uniqueKey!)\"}",
                          "order":"-updatedAt"]
@@ -150,7 +147,7 @@ extension ParseClient{
             }
             else{
                 if error?.domain == NSURLErrorDomain{
-                    completionHandler(placemarks: nil, error: error);
+                    completionHandler(placemarks: nil, error: error)
                 }
                 else{
                     let customError = NSError(domain: "GeoCodeError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Something Went Wrong While Fetching Coordinates of Location. Try Entering More Specific Location"])
@@ -172,21 +169,19 @@ extension ParseClient{
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: style)
         let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
         alertViewController.addAction(okAction)
-        controller.presentViewController(alertViewController, animated: true, completion: nil);
+        controller.presentViewController(alertViewController, animated: true, completion: nil)
     }
     
     func showWarningController(controller:UIViewController, warningMessage:String, title:String, style:UIAlertControllerStyle, completionHandler: (update:Bool) -> Void){
         let alertViewController = UIAlertController(title: title, message: warningMessage, preferredStyle: style)
         let okAction = UIAlertAction(title: "Overwrite", style: .Default){ (action) in
-            print("Okay pressed")
             completionHandler(update: true)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Default){ (action) in
-            print("Cancel Pressed")
             completionHandler(update: false)
-            
         }
+        
         alertViewController.addAction(okAction)
         alertViewController.addAction((cancelAction))
         controller.presentViewController(alertViewController, animated: true, completion: nil);
@@ -195,9 +190,11 @@ extension ParseClient{
     func extractUserFriendlyErrorMessage(error:NSError) -> String {
         var message = ""
         message = error.localizedDescription
+        
         if message.characters.count == 0{
             message = "Houston, we have a problem here and we don't know it's cause either"
         }
+        
         return message
     }
     

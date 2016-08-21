@@ -20,7 +20,7 @@ struct AuthData {
             self.user_key = account[ParseClient.LoginResponseKeys.Key] as! String
         }
         else{
-            return nil;
+            return nil
         }
         
         if let session = jsonResponse[ParseClient.LoginResponseKeys.Session]{

@@ -15,8 +15,8 @@ struct Credential {
     let authProvider : ParseClient.AuthenticationProvider
     
     init(username:String, password:String, token:String, authProvider:ParseClient.AuthenticationProvider){
-        self.username = username;
-        self.password = password;
+        self.username = username
+        self.password = password
         self.token = token
         self.authProvider = authProvider
     }

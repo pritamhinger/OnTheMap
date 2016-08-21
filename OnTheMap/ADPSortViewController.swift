@@ -16,7 +16,8 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var sortDirectionSegment: UISegmentedControl!
     @IBOutlet weak var sortableColumnPickerView: UIPickerView!
     
-    var notificationName = "";
+    var notificationName = ""
+    
     // MARK: - Private Properties
     private let sortableColumns = [
         ParseClient.ColumnDisplayName.CreatedTime,
@@ -35,7 +36,6 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                                                     ParseClient.ColumnDisplayName.UniqueKey:"uniqueKey",
                                                     ParseClient.ColumnDisplayName.UpdatedTime:"updatedAt"]
     
-    //private
     var sortParameter:SortParameter?
     
     // MARK: - Controller Life Cycle Events
@@ -46,7 +46,7 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         recordCountLabel.text = "\(recordCountStepper.value)"
         sortParameter = (UIApplication.sharedApplication().delegate as! AppDelegate).sortParameter
         
-        configureUI(sortParameter!);
+        configureUI(sortParameter!)
         
     }
     
