@@ -16,6 +16,7 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var sortDirectionSegment: UISegmentedControl!
     @IBOutlet weak var sortableColumnPickerView: UIPickerView!
     
+    var notificationName = "";
     // MARK: - Private Properties
     private let sortableColumns = [
         ParseClient.ColumnDisplayName.CreatedTime,
@@ -57,7 +58,7 @@ class ADPSortViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
     
     @IBAction func initiateGetRequest(sender: AnyObject) {
-        NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(notificationName, object: nil)
         dismissViewControllerAnimated(true, completion: nil)
     }
     

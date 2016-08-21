@@ -9,7 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController,FBSDKLoginButtonDelegate, UITextFieldDelegate {
     
     // MARK: - IBOutlets
     @IBOutlet weak var emailTextField: UITextField!
@@ -22,9 +22,12 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
     // MARK: - View Cycles Event
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         btnFacebook.delegate = self
-        //configureBackground()
         configureFacebook()
+        let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.tap(_:)))
+        view.addGestureRecognizer(tapGestureReconizer);
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -114,10 +117,17 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
         }
     }
     
+    // MARK: - UITextField Delegate Methods
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     // MARK: - FBSDKLoginButtonDelegate Methods
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if(error != nil){
-            
+            let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error)
+            ParseClient.sharedInstance().showError(self, message: errorMessage, title: "Login", style: .Alert)
         }
         else{
             if let token = FBSDKAccessToken.currentAccessToken(){
@@ -139,6 +149,11 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
         print("Log out called");
     }
 
+    // MARK: - Tap Gesture Event
+    func tap(sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     // MARK: - Private Methods
     func configureFacebook()
     {
@@ -181,12 +196,8 @@ class LoginViewController: UIViewController,FBSDKLoginButtonDelegate {
             }
             else{
                 performUIUpdatesOnMain{
-                    let userInfo = error?.userInfo;
-                    let errorMessage = userInfo![NSLocalizedDescriptionKey] as! String;
-                    let alertViewController = UIAlertController(title: "Login Failed", message: errorMessage, preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
-                    alertViewController.addAction(okAction)
-                    self.presentViewController(alertViewController, animated: true, completion: nil);
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "Login Failed", style: .Alert)
                 }
             }
         }

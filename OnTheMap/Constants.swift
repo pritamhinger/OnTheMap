@@ -106,7 +106,8 @@ extension ParseClient {
     }
     
     struct NotificationName {
-        static let SortParameterChangeNotification = "SortParameterChange"
+        static let SortParameterChangeNotificationForMap = "SortParameterChangeForMap"
+        static let SortParameterChangeNotificationForTable = "SortParameterChangeForTable"
     }
     
     struct  Label {

@@ -16,7 +16,7 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ADPStudentTableViewController.initiateGetRequestOnSortParameterChange(_:)), name: ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ADPStudentTableViewController.initiateGetRequestOnSortParameterChange(_:)), name: ParseClient.NotificationName.SortParameterChangeNotificationForTable, object: nil)
         
         if let result = (UIApplication.sharedApplication().delegate as! AppDelegate).students{
             self.students  = result
@@ -32,7 +32,10 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
                     }
                 }
                 else{
-                    ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
+                    performUIUpdatesOnMain{
+                        let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                        ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
+                    }
                 }
             }
         }
@@ -40,7 +43,7 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
 
     // MARK: - IBActions
     @IBAction func refresh(sender: UIBarButtonItem) {
-        NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        getStudents()
     }
     
     @IBAction func logout(sender: UIBarButtonItem) {
@@ -48,6 +51,12 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
             if error == nil{
                 performUIUpdatesOnMain{
                     self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+            else{
+                performUIUpdatesOnMain{
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
                 }
             }
         }
@@ -107,7 +116,18 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
                 }
             }
             else{
-                self.currentStudent = nil
+                if error?.domain == "Student Information"{
+                    self.currentStudent = nil
+                }
+                else{
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    performUIUpdatesOnMain{
+                        ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
+                    }
+                    
+                    return
+                }
+                
             }
             
             self.performSegueWithIdentifier("newRecordSegueFromTable", sender: nil)
@@ -120,6 +140,7 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
             let controller = segue.destinationViewController as! ADPSortViewController
             controller.modalPresentationStyle = UIModalPresentationStyle.Popover
             controller.popoverPresentationController?.delegate = self
+            controller.notificationName = ParseClient.NotificationName.SortParameterChangeNotificationForTable
         }
         else if segue.identifier == "newRecordSegueFromTable"{
             let controller = segue.destinationViewController as! ADPNewRecordViewController
@@ -141,6 +162,10 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
     
     // MARK: - NSNotification Handler
     func initiateGetRequestOnSortParameterChange(notification:NSNotification){
+        getStudents()
+    }
+    
+    func getStudents() {
         ParseClient.sharedInstance().getEnrolledStudents(){ (results, error) in
             if error == nil{
                 performUIUpdatesOnMain{
@@ -150,7 +175,10 @@ class ADPStudentTableViewController: UITableViewController, UIPopoverPresentatio
                 }
             }
             else{
-                ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
+                performUIUpdatesOnMain{
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
+                }
             }
         }
     }

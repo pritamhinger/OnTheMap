@@ -148,7 +148,13 @@ extension ParseClient{
                 }
             }
             else{
-                completionHandler(placemarks: nil, error: error)
+                if error?.domain == NSURLErrorDomain{
+                    completionHandler(placemarks: nil, error: error);
+                }
+                else{
+                    let customError = NSError(domain: "GeoCodeError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Something Went Wrong While Fetching Coordinates of Location. Try Entering More Specific Location"])
+                    completionHandler(placemarks: nil, error: customError)
+                }
             }
         }
     }
@@ -183,6 +189,15 @@ extension ParseClient{
         alertViewController.addAction(okAction)
         alertViewController.addAction((cancelAction))
         controller.presentViewController(alertViewController, animated: true, completion: nil);
+    }
+    
+    func extractUserFriendlyErrorMessage(error:NSError) -> String {
+        var message = ""
+        message = error.localizedDescription
+        if message.characters.count == 0{
+            message = "Houston, we have a problem here and we don't know it's cause either"
+        }
+        return message
     }
     
     func convertStudentDataToJSON(student:Student) -> String {

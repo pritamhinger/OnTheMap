@@ -27,15 +27,15 @@ class ParseClient: NSObject {
         request.addValue(ParseClient.ParseAPI.RestAPIKey, forHTTPHeaderField: ParseClient.HeaderKeys.RestKeyHeader);
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
-            func sendError(error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForGET(result: nil, error: NSError(domain: "Parse Get Task", code: 1, userInfo: userInfo))
+            func sendError(errorString: String) {
+                print(errorString)
+                let userInfo = [NSLocalizedDescriptionKey : errorString]
+                completionHandlerForGET(result: nil, error: NSError(domain: (error?.domain)!, code: (error?.code)!, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError((error?.localizedDescription)!);
                 return
             }
             
@@ -77,14 +77,14 @@ class ParseClient: NSObject {
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
-            func sendError(error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            func sendError(errorString: String) {
+                print(errorString)
+                let userInfo = [NSLocalizedDescriptionKey : errorString]
+                completionHandlerForPOST(result: nil, error: NSError(domain: (error?.domain)!, code: (error?.code)!, userInfo: userInfo))
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError((error?.localizedDescription)!);
                 return
             }
             
@@ -118,14 +118,14 @@ class ParseClient: NSObject {
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding);
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
-            func sendError(error: String) {
-                print(error);
-                let userInfo = [NSLocalizedDescriptionKey : error];
-                completionHandlerForLogin(result: nil, error: NSError(domain: "Login Task", code: 1, userInfo: userInfo));
+            func sendError(errorString: String) {
+                print(errorString);
+                let userInfo = [NSLocalizedDescriptionKey : errorString];
+                completionHandlerForLogin(result: nil, error: NSError(domain: (error?.domain)!, code: (error?.code)!, userInfo: userInfo));
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)");
+                sendError((error?.localizedDescription)!);
                 return;
             }
             print("\(NSString(data: data!, encoding: NSUTF8StringEncoding))");
@@ -164,14 +164,14 @@ class ParseClient: NSObject {
         request.HTTPMethod = ParseClient.HTTPMethods.GET;
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
-            func sendError(error: String) {
-                print(error);
-                let userInfo = [NSLocalizedDescriptionKey : error];
-                completionHandlerForLogin(result: nil, error: NSError(domain: "Login Task", code: 1, userInfo: userInfo));
+            func sendError(errorString: String) {
+                print(errorString);
+                let userInfo = [NSLocalizedDescriptionKey : errorString];
+                completionHandlerForLogin(result: nil, error: NSError(domain: (error?.domain)!, code: (error?.code)!, userInfo: userInfo));
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)");
+                sendError((error?.localizedDescription)!)
                 return;
             }
             
@@ -220,14 +220,14 @@ class ParseClient: NSObject {
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
-            func sendError(error: String) {
-                print(error);
-                let userInfo = [NSLocalizedDescriptionKey : error];
-                logoutCompletionHandler(result: nil, error: NSError(domain: "Logout Task", code: 1, userInfo: userInfo));
+            func sendError(errorString: String) {
+                print(errorString);
+                let userInfo = [NSLocalizedDescriptionKey : errorString];
+                logoutCompletionHandler(result: nil, error: NSError(domain: (error?.domain)!, code: (error?.code)!, userInfo: userInfo));
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)");
+                sendError((error?.localizedDescription)!)
                 return;
             }
             

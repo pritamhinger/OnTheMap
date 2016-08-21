@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ADPNewRecordViewController: UIViewController {
+class ADPNewRecordViewController: UIViewController, UITextFieldDelegate {
 
     var student:Student? = nil
     var chosenLocation = ""
@@ -24,9 +24,13 @@ class ADPNewRecordViewController: UIViewController {
     // MARK: - COntroller Life Cycle Events
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationTextBox.delegate = self
         if student != nil{
             prepareUI()
         }
+        
+        let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(ADPNewRecordViewController.tap(_:)))
+        view.addGestureRecognizer(tapGestureReconizer);
     }
 
     // MARK: - IBActions
@@ -73,7 +77,10 @@ class ADPNewRecordViewController: UIViewController {
                 }
             }
             else{
-                ParseClient.sharedInstance().showError(self, message: "Something Went Wrong While Fetching Coordinates of Location. Try Entering More Specific Location", title: "Student Location", style: .Alert)
+                performUIUpdatesOnMain{
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert);
+                }
             }
         }
     }
@@ -126,7 +133,8 @@ class ADPNewRecordViewController: UIViewController {
             }
             else{
                 performUIUpdatesOnMain{
-                    
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
                 }
             }
             
@@ -137,16 +145,18 @@ class ADPNewRecordViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: - UITextField Delegate Methods
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
-    */
 
+    // MARK: - Gesture Event
+    func tap(sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     // MARK: - Private Methods
     func prepareUI() {
         inputDescriptionLabel.text = ParseClient.Label.LocationInputText

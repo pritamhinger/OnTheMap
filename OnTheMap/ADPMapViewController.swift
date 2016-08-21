@@ -22,7 +22,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
         mapView.showsUserLocation = false
         mapView.zoomEnabled = true
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ADPMapViewController.initiateGetRequestOnSortParameterChange(_:)), name: ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ADPMapViewController.initiateGetRequestOnSortParameterChange(_:)), name: ParseClient.NotificationName.SortParameterChangeNotificationForMap, object: nil)
         
         ParseClient.sharedInstance().getEnrolledStudents(){(result, error) in
             if error == nil{
@@ -34,39 +34,14 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 }
             }
             else{
-                ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
+                let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                ParseClient.sharedInstance().showError(self, message: errorMessage, title: "Fetching student information", style: .Alert)
             }
         }
     }
     
     // MARK: - IBActions
     @IBAction func showStudentLocationForm(sender: UIBarButtonItem) {
-//        let authData = (UIApplication.sharedApplication().delegate as! AppDelegate).authData
-//        let uniqueKey = authData?.user_key
-//        print("\(uniqueKey)")
-//        
-//        let parameter = ["where":"{\"uniqueKey\":\"\(uniqueKey!)\"}",
-//                         "order":"-updatedAt"]
-//        
-//        ParseClient.sharedInstance().getStudentInformation(parameter){ (student, error) in
-//            if error == nil{
-//                self.currentStudent = student
-//                performUIUpdatesOnMain{
-//                    ParseClient.sharedInstance().showWarningController(self, warningMessage: "You Have Already Posted a Student Location. Would You Like to Overwrite Your Current Location", title: "Student Information", style: .Alert){ (update) in
-//                        if update{
-//                            print("Launch Controller with Student object")
-//                            self.performSegueWithIdentifier("newRecordSegueFromMap", sender: nil)
-//                        }
-//                    }
-//                }
-//            }
-//            else{
-//                performUIUpdatesOnMain{
-//                    self.currentStudent = nil
-//                    self.performSegueWithIdentifier("newRecordSegueFromMap", sender: self)
-//                }
-//            }
-//        }
         ParseClient.sharedInstance().checkUserRecord(self){ (student, update, error) in
             if error == nil {
                 if update{
@@ -77,7 +52,17 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 }
             }
             else{
-                self.currentStudent = nil
+                if error?.domain == "Student Information"{
+                    self.currentStudent = nil
+                }
+                else{
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    performUIUpdatesOnMain{
+                        ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
+                    }
+                    
+                    return
+                }
             }
             
             self.performSegueWithIdentifier("newRecordSegueFromMap", sender: nil)
@@ -85,7 +70,7 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
     }
 
     @IBAction func refreshMap(sender: UIBarButtonItem) {
-        NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(ParseClient.NotificationName.SortParameterChangeNotificationForMap, object: nil)
     }
     
     
@@ -101,7 +86,10 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 }
             }
             else{
-                
+                let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                performUIUpdatesOnMain{
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
+                }
             }
             
         }
@@ -151,12 +139,11 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
             let controller = segue.destinationViewController as! ADPSortViewController
             controller.modalPresentationStyle = UIModalPresentationStyle.Popover
             controller.popoverPresentationController?.delegate = self
+            controller.notificationName = ParseClient.NotificationName.SortParameterChangeNotificationForMap
         }
         else if segue.identifier == "newRecordSegueFromMap"{
             let controller = segue.destinationViewController as! ADPNewRecordViewController
             controller.student = currentStudent
-//            controller.modalPresentationStyle = UIModalPresentationStyle.Popover
-//            controller.popoverPresentationController?.delegate = self
         }
     }
  
@@ -195,7 +182,10 @@ class ADPMapViewController: UIViewController,MKMapViewDelegate,UIPopoverPresenta
                 }
             }
             else{
-                ParseClient.sharedInstance().showError(self, message: "Error : \(error.debugDescription)", title: "Fetching student information", style: .Alert)
+                performUIUpdatesOnMain{
+                    let errorMessage = ParseClient.sharedInstance().extractUserFriendlyErrorMessage(error!)
+                    ParseClient.sharedInstance().showError(self, message: errorMessage, title: "On The Map", style: .Alert)
+                }
             }
         }
     }
